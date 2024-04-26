@@ -1,0 +1,15 @@
+{
+    "name": "ctt504_final_furniture-store-website",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "concurrently \"cd server && npm run dev\" \"cd seller && npm start\" \"cd user && npm start\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "concurrently": "^8.2.2"
+    }
+}
