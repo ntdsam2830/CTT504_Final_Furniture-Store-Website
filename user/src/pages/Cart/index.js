@@ -17,14 +17,10 @@ const { Header, Footer, Content } = Layout;
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.auth.userCart) || null;
-  // const handleDelete = (record) => {
-  //   const data = { ...record, name: record.productName };
-  //   dispatch(deleteProductCart(data));
-  // };
 
   const handleDelete = (record) => {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Are you sure to delete?",
       text: "You won't be able to revert this product!",
       icon: "warning",
       showCancelButton: true,
@@ -38,6 +34,27 @@ const Cart = () => {
         Swal.fire({
           title: "Deleted!",
           text: "This product has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
+  const handlePayment = () => {
+    Swal.fire({
+      title: "Ready to complete your purchase?",
+      text: "Click 'Cancel' to keep shopping.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Checkout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteAllCart());
+        Swal.fire({
+          title: "Finished",
+          text: "Your cart has been purchased ",
           icon: "success",
         });
       }
@@ -80,10 +97,6 @@ const Cart = () => {
       ),
     },
   ];
-
-  const handlePayment = () => {
-    dispatch(deleteAllCart());
-  };
 
   return (
     <div style={{ background: "#fff", width: "100%" }}>
@@ -173,7 +186,7 @@ const Cart = () => {
               {cart.length !== 0 ? (
                 <Button
                   style={{ backgroundColor: "#F9F1E7", borderColor: "black" }}
-                  onClick={handlePayment}
+                  onClick={(record) => handlePayment(record)}
                 >
                   Check Out
                 </Button>
