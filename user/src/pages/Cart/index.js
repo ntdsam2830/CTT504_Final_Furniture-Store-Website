@@ -16,7 +16,7 @@ const { Header, Footer, Content } = Layout;
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.auth.userCart) || null;
+  const cart = useSelector((state) => state.auth.userCart);
 
   const handleDelete = (record) => {
     Swal.fire({
@@ -172,7 +172,7 @@ const Cart = () => {
                     color: "#B88E2F",
                   }}
                 >
-                  {cart.total}
+                  {cart.reduce((prev, curr) => prev + curr.total, 0)}
                 </Typography>
               </div>
             </Content>

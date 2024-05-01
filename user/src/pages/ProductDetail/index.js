@@ -46,14 +46,7 @@ const ProductDetail = () => {
   };
 
   const handleAddCart = () => {
-    if (
-      cart !== null &&
-      cart.filter((item) => item.productName === product.name).length !== 0
-    ) {
-      notification.error({
-        message: "The product existed in your cart",
-      });
-    } else if (user) {
+    if (user) {
       const newProduct = {
         id: product.id,
         name: product.name,
