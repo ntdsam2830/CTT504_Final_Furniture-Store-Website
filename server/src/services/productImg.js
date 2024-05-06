@@ -13,7 +13,7 @@ const saveProductImg = (files) => {
             resolve({
                 status: 'OK',
                 message: 'SUCCESS',
-                data: upImg
+                data: saveImg
             })
         } catch (e) {
             reject(e)

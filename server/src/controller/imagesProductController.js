@@ -16,12 +16,15 @@ const getProductImg = async (req, res, next) => {
 
 const saveProductImg = async (req, res, next) => {
     try {
-        const file = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype
-        }
-        const savedFile = (await productImgService.saveProductImg(file)).data;
-        res.status(200).json(savedFile.data._id)
+        const files = req.files.map(file => ({
+            data: file.buffer,
+            contentType: file.mimetype
+        }));
+
+        const savedFiles = await Promise.all(files.map(file => productImgService.saveProductImg(file)));
+
+        const savedFileIds = savedFiles.map(savedFile => savedFile.data._id);
+        res.status(200).json(savedFileIds)
     } catch (e) {
         next(e)
     }

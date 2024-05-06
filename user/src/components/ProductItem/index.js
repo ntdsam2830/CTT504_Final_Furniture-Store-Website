@@ -16,7 +16,7 @@ const ProductItem = ({ item, style }) => {
     <ProductItemWrapper style={style}>
       <ProductItemImage
         style={{
-          backgroundImage: `url(http://localhost:3500/api/picture${item.images[0]})`,
+          backgroundImage: `url(http://localhost:3500/api/productImg/getImgProduct/${item.images[0]})`,
         }}
       >
         {item.discount && item.discount !== "" && (

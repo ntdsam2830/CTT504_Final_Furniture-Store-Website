@@ -71,7 +71,7 @@ const ProductDetail = () => {
                 {product.images.map((image) => (
                   <ProductDetailImage>
                     <img
-                      src={`http://localhost:3500/api/picture${image}`}
+                      src={`http://localhost:3500/api/productImg/getImgProduct/${image}`}
                       alt=""
                     />
                   </ProductDetailImage>
@@ -85,8 +85,8 @@ const ProductDetail = () => {
                   <div>
                     $
                     {product.discount &&
-                    product.discount !== "New" &&
-                    product.discount !== ""
+                      product.discount !== "New" &&
+                      product.discount !== ""
                       ? product.price
                       : product.originPrice}
                   </div>

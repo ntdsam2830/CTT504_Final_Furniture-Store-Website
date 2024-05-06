@@ -19,14 +19,15 @@ app.use(cors(corsOption));// sau này chỉnh lại thành đg dẫn mặc đị
 const productRoute = require('./routes/productRouter');
 const userRoute = require('./routes/userRouter');
 const cartRoute = require('./routes/cartRouter');
+const productImgRoute = require('./routes/productImgRouter');
 
 //-----------------------------------
 
 app.use('/api/product', productRoute);
 app.use('/api/user', userRoute);
 app.use('/api/cart', cartRoute);
+app.use('/api/productImg', productImgRoute);
 app.use('/api/picture', express.static('public'));
-
 app.use(invalidPathHandler);
 app.use(errorResposerHandler);
 // đường dẫn của 1 file ảnh là: /Livingroom/maimz_Sofa/img1.webp

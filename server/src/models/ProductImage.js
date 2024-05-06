@@ -4,6 +4,6 @@ const imgProductSchema = new mongoose.Schema({
     contentType: String
 });
 
-const ImagePicPoint = mongoose.model('ImagePoint', imgProductSchema);
+const ImagePicPoint = mongoose.model('ImageProduct', imgProductSchema);
 
 module.exports = ImagePicPoint;
