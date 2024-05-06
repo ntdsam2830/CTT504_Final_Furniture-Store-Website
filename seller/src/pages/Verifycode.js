@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../components/CustomInput";
 import { replace, useFormik } from "formik";
 import * as yup from "yup";
+import { useSelector, useDispatch } from "react-redux";
+import { sendEmail } from "../features/auth/authSlice";
 
 let verifySchema = yup.object().shape({
   verifycode: yup.string().required("Verification code is Required"),
@@ -11,17 +13,22 @@ let verifySchema = yup.object().shape({
 
 const Verifycode = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state.auth.resetEmail);
   const formik = useFormik({
     initialValues: {
       verifycode: "",
     },
     validationSchema: verifySchema,
-    onSubmit: (values) => {},
+    onSubmit: (verifycode) => {},
   });
   const handleSubmit = (event) => {
     navigate("/reset-password");
   };
-  const handleResend = (event) => {};
+  const handleResend = () => {
+    console.log(selector);
+    dispatch(sendEmail(selector));
+  };
 
   return (
     <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>

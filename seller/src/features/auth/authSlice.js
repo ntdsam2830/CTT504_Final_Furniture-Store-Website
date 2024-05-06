@@ -12,6 +12,7 @@ const user = getAuthUser();
 const initialState = {
   user: user,
   orders: [],
+  resetEmail: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -30,7 +31,20 @@ export const login = createAsyncThunk(
     }
   }
 );
-
+export const sendEmail = createAsyncThunk(
+  "auth/sendEmail",
+  async (userData, thunkAPI) => {
+    try {
+      // initialState.resetEmail = userData;
+      return await authService.sendEmail(userData);
+    } catch (error) {
+      notification.error({
+        message: `${error.response.data.message}`,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (thunkAPI) => {
@@ -79,6 +93,25 @@ export const authSlice = createSlice({
         }, 500);
       })
       .addCase(login.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      .addCase(sendEmail.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendEmail.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.resetEmail = action.payload;
+        setTimeout(() => {
+          window.location.assign("/verify-code");
+        }, 500);
+      })
+      .addCase(sendEmail.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;

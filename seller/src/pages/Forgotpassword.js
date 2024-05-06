@@ -2,14 +2,30 @@ import { React, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../components/CustomInput";
-import { replace } from "formik";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { replace, useFormik } from "formik";
+import { sendEmail } from "../features/auth/authSlice";
+
+let resetSchema = yup.object().shape({
+  resetEmail: yup
+    .string()
+    .email("Email should be valid")
+    .required("Email is Required"),
+});
 
 const Forgotpassword = () => {
   const navigate = useNavigate();
-  const [inputs, setInputs] = useState();
-  const handleSubmit = (event) => {
-    navigate("/verify-code");
-  };
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      resetEmail: "",
+    },
+    validationSchema: resetSchema,
+    onSubmit: (values) => {
+      dispatch(sendEmail(values));
+    },
+  });
 
   return (
     <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
@@ -23,8 +39,16 @@ const Forgotpassword = () => {
         <p className="text-center">
           Please Enter your register email to get reset password mail.
         </p>
-        <form action="" onSubmit={handleSubmit}>
-          <CustomInput type="text" label="Email Address" name="email" />
+        <form action="" onSubmit={formik.handleSubmit}>
+          <CustomInput
+            type="text"
+            label="Email Address"
+            name="resetEmail"
+            id="resetEmail"
+            onChng={formik.handleChange("resetEmail")}
+            onBlr={formik.handleBlur("resetEmail")}
+            val={formik.values.resetEmail}
+          />
           <div>
             <button
               className="border-0 px-3 py-2 text-white fw-bold w-100 vertical mt-2"
