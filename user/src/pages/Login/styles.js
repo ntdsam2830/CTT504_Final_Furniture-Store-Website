@@ -12,7 +12,7 @@ export const FormWrapper = styled.div`
     align-items: center;
     flex-direction: column;
 
-    width: 50%;
+    width: 40%;
     background: #fff;
     border-radius: 0.75rem;
     box-shadow: 0 0 10px #0000001a;
@@ -31,10 +31,10 @@ export const FormInputWrapper = styled(Form)`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 
   margin-top: 1rem;
-  width: 100%;
+  width: 60%;
 `;
 
 export const FormError = styled.div`
@@ -42,6 +42,12 @@ export const FormError = styled.div`
 `;
 
 export const FormButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.2rem;
+  width: 30%;
   background: #b88e2f;
 
   &:hover {

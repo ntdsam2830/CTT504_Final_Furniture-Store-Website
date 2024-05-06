@@ -63,12 +63,17 @@ const Login = () => {
                 {formik.touched.password && formik.errors.password}
               </FormError>
             </Form.Item>
-
-            <Form.Item>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <FormButton type="primary" htmlType="submit">
                 Login
               </FormButton>
-            </Form.Item>
+            </div>
           </FormInputWrapper>
         </div>
       </FormWrapper>
