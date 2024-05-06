@@ -33,42 +33,29 @@ const addProduct = async (req, res, next) => {
 
       res.status(201).json(newCart.productList);
     } else {
-      const carts = await CartInfo.find();
-      console.log(carts);
-      const existingProduct = await CartInfo.aggregate([
-        {
-          $match: { userId: req.user._id },
-        },
-      ]).exec();
-      if (existingProduct) {
-        console.log(
-          JSON.stringify({ body: req.body, existingProduct, user: req.user })
-        );
-        await CartInfo.findOneAndUpdate(
-          {
-            userId: req.user._id,
-            "productList.productId": req.body.id,
-          },
-          {
-            $set: {
-              "productList.$.quantity": existingProduct.quantity + 1,
-            },
-          }
-        );
-        return res.status(200);
-      }
-
-      const newProduct = {
-        productId: req.body.id,
-        productName: req.body.name,
-        quantity: req.body.quantity,
-        price: req.body.price, // Giá sản phẩm mới
-        total: req.body.quantity * req.body.price, // Tính tổng giá trị sản phẩm mới
-      };
-      await CartInfo.updateOne(
-        { userId: req.user._id },
-        { $push: { productList: newProduct } }
+      const existingProduct = cart.productList.find(
+        product => product.productId === req.body.id
       );
+
+      if (existingProduct) {
+
+        existingProduct.quantity = req.body.quantity;
+        existingProduct.total = req.body.quantity * req.body.price;
+
+        await cart.save();
+        return res.status(200);
+      } else {
+        const newProduct = {
+          productId: req.body.id,
+          productName: req.body.name,
+          quantity: req.body.quantity,
+          price: req.body.price,
+          total: req.body.quantity * req.body.price,
+        };
+
+        cart.productList.push(newProduct);
+        await cart.save();
+      }
 
       const updatedCart = await CartInfo.findOne({ userId: req.user._id });
       if (!updatedCart) throw new Error("cant update cart");
