@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../components/CustomInput";
@@ -6,6 +6,11 @@ import { replace } from "formik";
 
 const Forgotpassword = () => {
   const navigate = useNavigate();
+  const [inputs, setInputs] = useState();
+  const handleSubmit = (event) => {
+    navigate("/verify-code");
+  };
+
   return (
     <div className="py-5" style={{ background: "#ffd333", minHeight: "100vh" }}>
       <br />
@@ -18,15 +23,15 @@ const Forgotpassword = () => {
         <p className="text-center">
           Please Enter your register email to get reset password mail.
         </p>
-        <form action="">
-          <CustomInput type="text" label="Email Address" id="email" />
+        <form action="" onSubmit={handleSubmit}>
+          <CustomInput type="text" label="Email Address" name="email" />
           <div>
             <button
               className="border-0 px-3 py-2 text-white fw-bold w-100 vertical mt-2"
               style={{ background: "#ffd333" }}
               type="submit"
             >
-              Send Link
+              Send Code
             </button>
             <button
               className="border-0 px-3 py-2 fw-bold w-100 vertical mt-1"

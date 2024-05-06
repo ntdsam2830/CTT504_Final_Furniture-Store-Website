@@ -1,18 +1,21 @@
-const express = require('express');
-const cors = require('cors');
-const { errorResposerHandler, invalidPathHandler } = require('./middleware/errorHandler');
-require('express-async-errors');
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+const {
+  errorResposerHandler,
+  invalidPathHandler,
+} = require("./middleware/errorHandler");
+require("express-async-errors");
+require("dotenv").config();
 
 //-----------------------------------
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOption = {
-    origin: [process.env.SELLER_URL, process.env.USER_URL],
-    credentials: true
-}
-app.use(cors(corsOption));// sau này chỉnh lại thành đg dẫn mặc định
+  origin: [process.env.SELLER_URL, process.env.USER_URL],
+  credentials: true,
+};
+app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
 
 //-----------------------------------
 //routes & controller

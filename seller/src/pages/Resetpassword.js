@@ -21,7 +21,7 @@ const Resetpassword = () => {
           />
 
           <button
-            className="border-0 px-3 py-2 text-white fw-bold w-100"
+            className="border-0 px-3 py-2 text-white fw-bold w-100 mt-3"
             style={{ background: "#ffd333" }}
             type="submit"
           >
