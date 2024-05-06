@@ -1,0 +1,36 @@
+const OtpService = require("../services/otp.services");
+
+const saveOtp = async (req, res, next) => {
+    try {
+        const email = req.body.email
+        if (!email) {
+            throw new Error('Inpur is required')
+        }
+        const checkOtp = await OtpService.saveOtp(email);
+        if (checkOtp) {
+            res.status(200).json(checkOtp)
+        }
+    } catch (e) {
+        next(e)
+    }
+}
+
+const checkOtp = async (req, res) => {
+    try {
+        const { email, otp } = req.body
+
+        if (!email || !otp) {
+            throw new Error('Inpur is required')
+        }
+        const checkOtp = await OtpService.checkAndDeleteOtp(email, otp);
+        if (checkOtp) {
+            res.status.json(checkOtp)
+        }
+    } catch (e) {
+        next(e)
+    }
+}
+module.exports = {
+    saveOtp,
+    checkOtp
+}

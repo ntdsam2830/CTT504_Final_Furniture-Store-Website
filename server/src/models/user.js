@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const {hash, compare} = require('bcryptjs');
-const {sign} = require('jsonwebtoken');
+const { hash, compare } = require('bcryptjs');
+const { sign } = require('jsonwebtoken');
 
 
 const userInfo = new Schema({
@@ -26,25 +26,25 @@ const userInfo = new Schema({
         type: String,
         default: "user"
     }
-},{timestamps: false});
+}, { timestamps: false });
 
-userInfo.pre('save', async function(next) {
-    if(this.isModified('password')){
-        this.password = await hash(this.password,10);
+userInfo.pre('save', async function (next) {
+    if (this.isModified('password')) {
+        this.password = await hash(this.password, 10);
         return next();
     }
     return next();
 });
 
-userInfo.methods.generateJWT = async function() {
-    return await sign({id: this._id}, process.env.USER_TOKEN, {expiresIn: '30d',});
+userInfo.methods.generateJWT = async function () {
+    return await sign({ id: this._id }, process.env.USER_TOKEN, { expiresIn: '30d', });
 };
 
-userInfo.methods.generateJWTSeller = async function() {
-    return await sign({id: this._id}, process.env.SELLER_TOKEN, {expiresIn: '30d',});
+userInfo.methods.generateJWTSeller = async function () {
+    return await sign({ id: this._id }, process.env.SELLER_TOKEN, { expiresIn: '30d', });
 };
 
-userInfo.methods.comparePassword = async function(enteredPassword){
+userInfo.methods.comparePassword = async function (enteredPassword) {
     return await compare(enteredPassword, this.password);
 }
 

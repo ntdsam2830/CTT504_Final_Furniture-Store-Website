@@ -1,25 +1,25 @@
 const User = require("../models/User");
 
-const registerUser = async (req,res,next)=> {
+const registerUser = async (req, res, next) => {
 
     try {
-        const {userName, email,phoneNumber, password} = req.body;
+        const { userName, email, phoneNumber, password } = req.body;
 
         //check whether user exists or not
-        let user = await User.findOne({email});
+        let user = await User.findOne({ email });
         if (user) {
             throw new Error("Email is ready exists");
         }
         // creating a new user
         user = await User.create({
-            userName, email,phoneNumber, password
+            userName, email, phoneNumber, password
         });
         return res.status(201).json({
             _id: user._id,
-            userName : user.userName,
-            email : user.email,
+            userName: user.userName,
+            email: user.email,
             phoneNumber: user.phoneNumber,
-            token: await user.generateJWT(), 
+            token: await user.generateJWT(),
         });
 
     } catch (error) {
@@ -27,40 +27,40 @@ const registerUser = async (req,res,next)=> {
     }
 }
 
-const loginUser = async (req,res,next) => {
+const loginUser = async (req, res, next) => {
     try {
         console.log(req.body);
-        const {email , password} = req.body;
-        let user = await User.findOne({email});
-        if(!user){
+        const { email, password } = req.body;
+        let user = await User.findOne({ email });
+        if (!user) {
             throw new Error("Email not found");
         }
 
-        if(await user.comparePassword(password)){
+        if (await user.comparePassword(password)) {
             return res.status(201).json({
                 _id: user._id,
-                userName : user.userName,
-                email : user.email,
+                userName: user.userName,
+                email: user.email,
                 phoneNumber: user.phoneNumber,
-                token: await user.generateJWT(), 
+                token: await user.generateJWT(),
             });
         } else {
-            throw new Error("Invalid password");x
+            throw new Error("Invalid password"); x
         }
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 }
 
-const userProfile = async (req,res,next) => {
+const userProfile = async (req, res, next) => {
     try {
         let user = await User.findById(req.user._id);
-        if(user) {
+        if (user) {
             return res.status(201).json({
                 _id: user._id,
-                avatar : user.avatar,
-                name : user.name,
-                email : user.email,
+                avatar: user.avatar,
+                name: user.name,
+                email: user.email,
                 phoneNumber: user.phoneNumber
             });
         } else {
@@ -71,11 +71,11 @@ const userProfile = async (req,res,next) => {
     }
 }
 
-const updateProfile = async (req,res,next) => {
+const updateProfile = async (req, res, next) => {
     try {
         let user = await User.findById(req.user._id);
 
-        if(!user){
+        if (!user) {
             throw new Error("User not found");
         }
 
@@ -83,7 +83,7 @@ const updateProfile = async (req,res,next) => {
         user.email = req.body.email || user.email;
         user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
         const updateUserProfile = await user.save();
-        
+
         res.status(201).json({
             _id: updateUserProfile._id,
             userName: updateUserProfile.userName,
@@ -97,41 +97,42 @@ const updateProfile = async (req,res,next) => {
 
 const loginAdmin = async (req, res, next) => {
     try {
-        const {email , password} = req.body;
-        let user = await User.findOne({email});
-        if(await user.comparePassword(password)){
+        const { email, password } = req.body;
+        let user = await User.findOne({ email });
+        if (await user.comparePassword(password)) {
             return res.status(201).json({
                 _id: user._id,
-                userName : user.userName,
-                email : user.email,
+                userName: user.userName,
+                email: user.email,
                 phoneNumber: user.phoneNumber,
-                token: await user.generateJWTSeller(), 
+                token: await user.generateJWTSeller(),
             });
         } else {
             throw new Error("Invalid password");
         }
-    } catch(error) {
+    } catch (error) {
         next(error);
     }
 }
+
 //only for testing
-const registerAdmin = async(req, res, next)=> {
+const registerAdmin = async (req, res, next) => {
     try {
-        const {userName, email,phoneNumber, password} = req.body;
+        const { userName, email, phoneNumber, password } = req.body;
 
         //check whether user exists or not
-        let user = await User.findOne({email});
+        let user = await User.findOne({ email });
         if (user) {
             throw new Error("have registered");
         }
         // creating a new user
         user = await User.create({
-            userName, email,phoneNumber, password, role: "admin"
+            userName, email, phoneNumber, password, role: "admin"
         });
         return res.status(201).json({
             _id: user._id,
-            userName : user.userName,
-            email : user.email,
+            userName: user.userName,
+            email: user.email,
             phoneNumber: user.phoneNumber,
             //token: await user.generateJWTSeller(), 
         });
@@ -140,4 +141,4 @@ const registerAdmin = async(req, res, next)=> {
         next(error);
     }
 }
-module.exports = {registerUser, loginUser, userProfile, updateProfile, loginAdmin, registerAdmin};   
+module.exports = { registerUser, loginUser, userProfile, updateProfile, loginAdmin, registerAdmin };   
