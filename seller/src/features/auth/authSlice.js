@@ -49,8 +49,20 @@ export const sendVerification = createAsyncThunk(
   "auth/sendVerification",
   async (userData, thunkAPI) => {
     try {
-      // initialState.resetEmail = userData;
       return await authService.sendVerification(userData);
+    } catch (error) {
+      notification.error({
+        message: `${error.response.data.message}`,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const sendNewPassword = createAsyncThunk(
+  "auth/sendNewPassword",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.sendNewPassword(userData);
     } catch (error) {
       notification.error({
         message: `${error.response.data.message}`,
@@ -146,6 +158,26 @@ export const authSlice = createSlice({
         }, 500);
       })
       .addCase(sendVerification.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      //send new pass
+      .addCase(sendNewPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendNewPassword.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "success";
+        setTimeout(() => {
+          window.location.assign("/");
+        }, 500);
+      })
+      .addCase(sendNewPassword.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
