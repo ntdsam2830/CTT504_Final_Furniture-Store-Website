@@ -1,22 +1,17 @@
-const User = require("../models/User");
-const { hash, compare } = require("bcryptjs");
+// controller/usersController.js
 
-const registerUser = async (req, res, next) => {
+const {
+  findUserByEmail,
+  registerUser,
+  updateProfile,
+  resetPassword,
+} = require("../services/users.services");
+
+const { compare } = require("bcryptjs");
+
+const registerUserController = async (req, res, next) => {
   try {
-    const { userName, email, phoneNumber, password } = req.body;
-
-    //check whether user exists or not
-    let user = await User.findOne({ email });
-    if (user) {
-      throw new Error("Email is ready exists");
-    }
-    // creating a new user
-    user = await User.create({
-      userName,
-      email,
-      phoneNumber,
-      password,
-    });
+    const user = await registerUser(req.body);
     return res.status(201).json({
       _id: user._id,
       userName: user.userName,
@@ -29,11 +24,10 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-const loginUser = async (req, res, next) => {
+const loginUserController = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
-    let user = await User.findOne({ email });
+    const user = await findUserByEmail(email);
     if (!user) {
       throw new Error("Email not found");
     }
@@ -54,9 +48,9 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-const userProfile = async (req, res, next) => {
+const userProfileController = async (req, res, next) => {
   try {
-    let user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id);
     if (user) {
       return res.status(201).json({
         _id: user._id,
@@ -73,56 +67,41 @@ const userProfile = async (req, res, next) => {
   }
 };
 
-const updateProfile = async (req, res, next) => {
+const updateProfileController = async (req, res, next) => {
   try {
-    let user = await User.findById(req.user._id);
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    user.userName = req.body.userName || user.userName;
-    user.email = req.body.email || user.email;
-    user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
-    const updateUserProfile = await user.save();
-
-    res.status(201).json({
-      _id: updateUserProfile._id,
-      userName: updateUserProfile.userName,
-      email: updateUserProfile.email,
-      phoneNumber: updateUserProfile.phoneNumber,
+    const updatedUser = await updateProfile(req.user._id, req.body);
+    return res.status(201).json({
+      _id: updatedUser._id,
+      userName: updatedUser.userName,
+      email: updatedUser.email,
+      phoneNumber: updatedUser.phoneNumber,
     });
   } catch (error) {
     next(error);
   }
 };
 
-const resetPassword = async (req, res, next) => {
+const resetPasswordController = async (req, res, next) => {
   try {
-    console.log(req.body);
     const { email, newPassword } = req.body;
     if (!email || !newPassword) {
-      throw new Error("Inputs is required");
+      throw new Error("Inputs are required");
     }
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    user.password = await hash(newPassword, 10);
-    const updatePass = await user.save();
-    if (updatePass) {
-      res.status(200).json("true");
-    }
+    const updatedUser = await resetPassword(email, newPassword);
+    return res.status(200).json("true");
   } catch (e) {
     next(e);
   }
 };
 
-const loginAdmin = async (req, res, next) => {
+const loginAdminController = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    let user = await User.findOne({ email });
+    const user = await findUserByEmail(email);
+    if (!user) {
+      throw new Error("Email not found");
+    }
+
     if (await user.comparePassword(password)) {
       return res.status(201).json({
         _id: user._id,
@@ -139,41 +118,39 @@ const loginAdmin = async (req, res, next) => {
   }
 };
 
-//only for testing
-const registerAdmin = async (req, res, next) => {
+const registerAdminController = async (req, res, next) => {
   try {
     const { userName, email, phoneNumber, password } = req.body;
-
-    //check whether user exists or not
-    let user = await User.findOne({ email });
+    const user = await findUserByEmail(email);
     if (user) {
-      throw new Error("have registered");
+      throw new Error("Admin already exists");
     }
-    // creating a new user
-    user = await User.create({
+
+    const admin = await User.create({
       userName,
       email,
       phoneNumber,
       password,
       role: "admin",
     });
+
     return res.status(201).json({
-      _id: user._id,
-      userName: user.userName,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      //token: await user.generateJWTSeller(),
+      _id: admin._id,
+      userName: admin.userName,
+      email: admin.email,
+      phoneNumber: admin.phoneNumber,
     });
   } catch (error) {
     next(error);
   }
 };
+
 module.exports = {
-  registerUser,
-  loginUser,
-  userProfile,
-  updateProfile,
-  loginAdmin,
-  registerAdmin,
-  resetPassword,
+  registerUserController,
+  loginUserController,
+  userProfileController,
+  updateProfileController,
+  loginAdminController,
+  registerAdminController,
+  resetPasswordController,
 };
