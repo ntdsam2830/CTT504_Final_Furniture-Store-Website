@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { hash, compare } = require('bcryptjs');
 
 const registerUser = async (req, res, next) => {
 
@@ -45,7 +46,7 @@ const loginUser = async (req, res, next) => {
                 token: await user.generateJWT(),
             });
         } else {
-            throw new Error("Invalid password"); x
+            throw new Error("Invalid password");
         }
     } catch (error) {
         next(error);
@@ -95,6 +96,27 @@ const updateProfile = async (req, res, next) => {
     }
 }
 
+const resetPassword = async (req, res, next) => {
+    try {
+        const { email, newPassword } = req.body;
+        if (!email || !newPassword) {
+            throw new Error("Inputs is required")
+        }
+        const user = await User.findOne({ email });
+        if (!user) {
+            throw new Error("User not found")
+        }
+
+        user.password = await hash(newPassword, 10);
+        const updatePass = await user.save();
+        if (updatePass) {
+            res.status(200).json("true");
+        }
+    } catch (e) {
+        next(e);
+    }
+}
+
 const loginAdmin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -141,4 +163,4 @@ const registerAdmin = async (req, res, next) => {
         next(error);
     }
 }
-module.exports = { registerUser, loginUser, userProfile, updateProfile, loginAdmin, registerAdmin };   
+module.exports = { registerUser, loginUser, userProfile, updateProfile, loginAdmin, registerAdmin, resetPassword };   

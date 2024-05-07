@@ -15,12 +15,12 @@ const saveOtp = async (req, res, next) => {
     }
 };
 
-const checkOtp = async (req, res) => {
+const checkOtp = async (req, res, next) => {
     try {
         const { email, otp } = req.body;
 
         if (!email || !otp) {
-            throw new Error("Input is required");
+            throw new Error("Inputs is required");
         }
         const checkOtp = await OtpService.checkAndDeleteOtp(email, otp);
         if (checkOtp) {
