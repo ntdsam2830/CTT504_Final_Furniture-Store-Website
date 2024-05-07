@@ -45,6 +45,20 @@ export const sendEmail = createAsyncThunk(
     }
   }
 );
+export const sendVerification = createAsyncThunk(
+  "auth/sendVerification",
+  async (userData, thunkAPI) => {
+    try {
+      // initialState.resetEmail = userData;
+      return await authService.sendVerification(userData);
+    } catch (error) {
+      notification.error({
+        message: `${error.response.data.message}`,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (thunkAPI) => {
@@ -98,7 +112,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
-
+      //reset email
       .addCase(sendEmail.pending, (state) => {
         state.isLoading = true;
       })
@@ -113,6 +127,25 @@ export const authSlice = createSlice({
         }, 500);
       })
       .addCase(sendEmail.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      
+      //sent verification
+      .addCase(sendVerification.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendVerification.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        setTimeout(() => {
+          window.location.assign("/reset-password");
+        }, 500);
+      })
+      .addCase(sendVerification.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;

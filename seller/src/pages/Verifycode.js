@@ -5,7 +5,7 @@ import CustomInput from "../components/CustomInput";
 import { replace, useFormik } from "formik";
 import * as yup from "yup";
 import { useSelector, useDispatch } from "react-redux";
-import { sendEmail } from "../features/auth/authSlice";
+import { sendEmail, sendVerification } from "../features/auth/authSlice";
 
 let verifySchema = yup.object().shape({
   verifycode: yup.string().required("Verification code is Required"),
@@ -22,13 +22,12 @@ const Verifycode = () => {
     },
     validationSchema: verifySchema,
     onSubmit: (verifycode) => {
+      dispatch(
+        sendVerification({ email: resetEmail, otp: verifycode.verifycode })
+      );
     },
   });
-  const handleSubmit = (event) => {
-    navigate("/reset-password");
-  };
   const handleResend = () => {
-
     dispatch(sendEmail({ resetEmail: resetEmail }));
   };
 
@@ -45,7 +44,7 @@ const Verifycode = () => {
           Check the email that's associated with your account for the reset
           password code.{" "}
         </p>
-        <form action="" onSubmit={handleSubmit}>
+        <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
             label="Verification code"
