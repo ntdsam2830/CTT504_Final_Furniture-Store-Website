@@ -69,7 +69,6 @@ const saveOtp = (email) => {
 const checkAndDeleteOtp = (email, otpCheck) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log(email + otpCheck);
       const checkOtp = await OTP.findOne({ email: email });
       if (!checkOtp) {
         reject("No OTP to check");

@@ -19,10 +19,13 @@ const Resetpassword = () => {
   const formik = useFormik({
     initialValues: {
       newpass: "",
+      confirmpass: "",
     },
-    validationSchema: resetPassSchema,
+   // validationSchema: resetPassSchema,
     onSubmit: (values) => {
-      dispatch(sendNewPassword({ email: resetEmail, newpass: values.newpass }));
+      dispatch(
+        sendNewPassword({ email: resetEmail, newPassword: values.newpass })
+      );
     },
   });
   return (
@@ -52,6 +55,7 @@ const Resetpassword = () => {
             name="confirmpass"
             onChng={formik.handleChange("confirmpass")}
             onBlr={formik.handleBlur("confirmpass")}
+            val={formik.values.confirmpass}
           />
 
           <button
