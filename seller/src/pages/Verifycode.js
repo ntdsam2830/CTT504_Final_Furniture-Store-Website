@@ -14,20 +14,22 @@ let verifySchema = yup.object().shape({
 const Verifycode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state.auth.resetEmail);
+
+
   const formik = useFormik({
     initialValues: {
       verifycode: "",
     },
     validationSchema: verifySchema,
-    onSubmit: (verifycode) => {},
+    onSubmit: (verifycode) => { },
   });
   const handleSubmit = (event) => {
     navigate("/reset-password");
   };
   const handleResend = () => {
-    console.log(selector);
-    dispatch(sendEmail(selector));
+    const resetEmail = { resetEmail: sessionStorage.getItem("resetEmail") }
+
+    dispatch(sendEmail(resetEmail));
   };
 
   return (

@@ -106,7 +106,8 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
         state.isSuccess = true;
-        state.resetEmail = action.payload;
+        state.resetEmail = action.payload.data;
+        console.log(action.payload.data);
         setTimeout(() => {
           window.location.assign("/verify-code");
         }, 500);

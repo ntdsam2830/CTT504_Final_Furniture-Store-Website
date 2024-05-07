@@ -10,10 +10,6 @@ const login = async (user) => {
 };
 const sendEmail = async (resetEmail) => {
   const response = await axios.post(`${base_url}otp/sendOtp`, resetEmail);
-  console.log(response);
-  if (response) {
-    localStorage.setItem("resetEmail", JSON.stringify(response));
-  }
   return response;
 };
 const getOrders = async () => {

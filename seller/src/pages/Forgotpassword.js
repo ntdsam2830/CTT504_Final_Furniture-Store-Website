@@ -23,6 +23,7 @@ const Forgotpassword = () => {
     },
     validationSchema: resetSchema,
     onSubmit: (values) => {
+      sessionStorage.setItem("resetEmail", values.resetEmail);
       dispatch(sendEmail(values));
     },
   });
