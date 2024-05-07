@@ -54,6 +54,9 @@ const Verifycode = () => {
             onBlr={formik.handleBlur("verifycode")}
             val={formik.values.verifycode}
           />
+          <div className="error mt-2">
+            {formik.touched.verifycode && formik.errors.verifycode}
+          </div>
           <div>
             <button
               className="border-0 px-3 py-2 text-white fw-bold w-100 vertical mt-2"

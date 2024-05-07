@@ -51,6 +51,9 @@ const Forgotpassword = () => {
             onBlr={formik.handleBlur("resetEmail")}
             val={formik.values.resetEmail}
           />
+          <div className="error mt-2">
+            {formik.touched.resetEmail && formik.errors.resetEmail}
+          </div>
           <div>
             <button
               className="border-0 px-3 py-2 text-white fw-bold w-100 vertical mt-2"

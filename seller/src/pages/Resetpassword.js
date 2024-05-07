@@ -13,7 +13,8 @@ const Resetpassword = () => {
     newpass: yup.string().required("Password is required"),
     confirmpass: yup
       .string()
-      .oneOf([yup.ref("newpass"), null], "Passwords must match"),
+      .required("Password confirmation is required")
+      .oneOf([yup.ref("newpass")], "Passwords must match"),
   });
 
   const formik = useFormik({
@@ -21,7 +22,7 @@ const Resetpassword = () => {
       newpass: "",
       confirmpass: "",
     },
-   // validationSchema: resetPassSchema,
+    validationSchema: resetPassSchema,
     onSubmit: (values) => {
       dispatch(
         sendNewPassword({ email: resetEmail, newPassword: values.newpass })
@@ -48,6 +49,9 @@ const Resetpassword = () => {
             onBlr={formik.handleBlur("newpass")}
             val={formik.values.newpass}
           />
+          <div className="error mt-2">
+            {formik.touched.newpass && formik.errors.newpass}
+          </div>
           <CustomInput
             type="password"
             label="Confirm Password"
@@ -57,7 +61,9 @@ const Resetpassword = () => {
             onBlr={formik.handleBlur("confirmpass")}
             val={formik.values.confirmpass}
           />
-
+          <div className="error mt-2">
+            {formik.touched.confirmpass && formik.errors.confirmpass}
+          </div>
           <button
             className="border-0 px-3 py-2 text-white fw-bold w-100 mt-3"
             style={{ background: "#ffd333" }}
