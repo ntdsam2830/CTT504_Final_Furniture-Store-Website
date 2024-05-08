@@ -100,19 +100,26 @@ const updateProfile = async (req, res, next) => {
 const resetPassword = async (req, res, next) => {
   try {
     console.log(req.body);
+
     const { email, newPassword } = req.body;
     if (!email || !newPassword) {
       throw new Error("Inputs is required");
     }
+
     const user = await User.findOne({ email });
+
     if (!user) {
       throw new Error("User not found");
     }
 
     user.password = await hash(newPassword, 10);
+
     const updatePass = await user.save();
+
     if (updatePass) {
       res.status(200).json("true");
+
+      console.log(res.body)
     }
   } catch (e) {
     next(e);

@@ -12,6 +12,7 @@ export const getProducts = createAsyncThunk(
     }
   }
 );
+
 export const createProducts = createAsyncThunk(
   "product/create-products",
   async (productData, thunkAPI) => {
@@ -25,6 +26,7 @@ export const createProducts = createAsyncThunk(
     }
   }
 );
+
 export const resetState = createAction("Reset_all");
 
 export const deleteOneProduct = createAsyncThunk(
@@ -75,6 +77,7 @@ const initialState = {
   isSuccess: false,
   message: "",
 };
+
 export const productSlice = createSlice({
   name: "products",
   initialState,
