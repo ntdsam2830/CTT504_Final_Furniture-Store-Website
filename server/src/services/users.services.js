@@ -45,7 +45,7 @@ const resetPassword = async (email, newPassword) => {
   if (!user) {
     throw new Error("User not found");
   }
-  user.password = await hash(newPassword, 10);
+  user.password = newPassword
   return await user.save();
 };
 
