@@ -1,19 +1,26 @@
 import React from "react";
 import CustomInput from "../components/CustomInput";
+import CustomTextarea from "../components/CustomTextarea";
 import "react-quill/dist/quill.snow.css";
-import { Input } from "antd";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import "../App.css";
 import { createProducts } from "../features/product/productSlice";
-import { useEffect } from "react";
-import Swal from "sweetalert2";
+import { Checkbox, Flex } from "antd";
+const CheckboxGroup = Checkbox.Group;
 
-const digitRegExp = /^[0-9]*$/;
 
 const Addproduct = () => {
   const dispatch = useDispatch();
+
+  const options = [
+    { label: 'Dining Room', value: 'Diningroom' },
+    { label: 'Living Room', value: 'Livingroom' },
+    { label: 'Bed Room', value: 'Bedroom' },
+  ];
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -33,17 +40,23 @@ const Addproduct = () => {
         .required("Product name is required")
         .min(2, "Minimum 2 characters")
         .max(200, "Maximum 200 characters"),
-      originPrice: Yup.string()
-        .required("Origin price is required")
-        .matches(digitRegExp, "Origin price is not valid")
-        .min(0, "No negative number"),
-      quantity: Yup.string()
-        .required("Quantity is required")
-        .matches(digitRegExp, "Quantity is not valid")
-        .min(0, "No negative number"),
+      originPrice: Yup.number()
+        .required('Product price is required')
+        .test(
+          'Is positive?',
+          'Product price must be positive',
+          (value) => value > 0
+        ),
+      quantity: Yup.number()
+        .required('Product quantity is required')
+        .test(
+          'Is positive?',
+          'Product quantity must be positive',
+          (value) => value > 0
+        ),
       shortDesc: Yup.string()
         .required("Short description is required")
-        .max(15, "Maximum 100 characters"),
+        .max(100, "Maximum 100 characters"),
       fullDesc: Yup.string().required("Full description is required"),
     }),
     onSubmit: (values) => {
@@ -72,6 +85,7 @@ const Addproduct = () => {
   return (
     <div>
       <h3 className="mb-4 title">Add Product</h3>
+      <h5>Product information</h5>
       <div>
         <form onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -87,7 +101,7 @@ const Addproduct = () => {
             </p>
           )}
           <CustomInput
-            type="text"
+            type="number"
             label="Product Price($)"
             onChng={formik.handleChange("originPrice")}
             onBlr={formik.handleBlur("originPrice")}
@@ -99,7 +113,7 @@ const Addproduct = () => {
             </p>
           )}
           <CustomInput
-            type="text"
+            type="number"
             label="Product Quantity"
             onChng={formik.handleChange("quantity")}
             onBlr={formik.handleBlur("quantity")}
@@ -122,73 +136,56 @@ const Addproduct = () => {
               {formik.touched.shortDesc && formik.errors.shortDesc}
             </p>
           )}
+          <CustomTextarea
+            label="Full Description"
+            onChng={formik.handleChange("fullDesc")}
+            onBlr={formik.handleBlur("fullDesc")}
+            val={formik.values.fullDesc}
+          />
+          {formik.errors.fullDesc && formik.touched.fullDesc && (
+            <p className="alert-error">
+              {formik.touched.fullDesc && formik.errors.fullDesc}
+            </p>
+          )}
 
-          <div className="custom-textarea">
-            <label htmlFor="Full Description">Full Description</label>
-            <textarea
-              type="text"
-              label="Full Description"
-              onChange={formik.handleChange("fullDesc")}
-              onBlur={formik.handleBlur("fullDesc")}
-              val={formik.values.fullDesc}
-              rows="5"
-            />
-            {formik.errors.fullDesc && formik.touched.fullDesc && (
-              <p className="alert-error">
-                {formik.touched.fullDesc && formik.errors.fullDesc}
-              </p>
-            )}
-          </div>
-
+          <h5 style={{ marginRight: '10px', marginTop: '30px' }}>Product category</h5>
           <div className="product-list-filter">
-            <div>Filter:</div>
-            <label>
-              <input
-                name="type"
-                type="checkbox"
-                onChange={formik.handleChange("type")}
-                value="Livingroom"
-              />
-              Living Room
-            </label>
-            <label>
-              <input
-                name="type"
-                type="checkbox"
-                onChange={formik.handleChange("type")}
-                value="Diningroom"
-              />
-              Dining Room
-            </label>
-            <label>
-              <input
-                name="type"
-                type="checkbox"
-                onChange={formik.handleChange("type")}
-                value="Bedroom"
-              />
-              Bed Room
-            </label>
+            <CheckboxGroup options={options}
+              onChange={(checkedValues) => {
+                formik.setFieldValue("type", checkedValues);
+              }} />
           </div>
 
-          <div className="form-floating mt-3">
-            <input
+          <h5 style={{ marginRight: '10px', marginTop: '30px' }}>Product image(s)</h5>
+          <div class="mt-3">
+            <input class="form-control"
               type="file"
               name="photo"
               accept="image/*"
+              id="formFile"
               multiple
               onChange={(e) =>
                 formik.setFieldValue("image", e.currentTarget.files)
-              }
-            />
+              } />
           </div>
 
-          <button
-            className="btn btn-success border-0 rounded-3 my-5"
-            type="submit"
-          >
-            Add Product
-          </button>
+          <Flex gap="small" wrap="wrap">
+            <button
+              className="btn btn-success border-0 rounded-3 my-5"
+              type="submit"
+            >
+              Add product
+            </button>
+
+            <Link
+              to="/admin"
+              className="btn btn-primary border-0 rounded-3 my-5"
+              type="button"
+              onClick={formik.resetForm}
+            >
+              Back
+            </Link>
+          </Flex>
         </form>
       </div>
     </div>
