@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import CustomInput from "../components/CustomInput";
-import { useState } from "react";
+import CustomTextarea from "../components/CustomTextarea";
 import "react-quill/dist/quill.snow.css";
-import { InboxOutlined } from "@ant-design/icons";
-import { message, Upload, Input, Checkbox, Flex } from "antd";
+import { Checkbox, Flex } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { editProduct, getOneProduct } from "../features/product/productSlice";
+const CheckboxGroup = Checkbox.Group;
 
-const { TextArea } = Input;
 
 const convertToNumber = (input) => {
   if (/\d+%$/.test(input)) {
@@ -36,6 +35,12 @@ const initProduct = {
 const ProductItem = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
+
+  const options = [
+    { label: 'Dining Room', value: 'Diningroom' },
+    { label: 'Living Room', value: 'Livingroom' },
+    { label: 'Bed Room', value: 'Bedroom' },
+  ];
 
   const data = useSelector((state) => state.product.oneProduct) || initProduct;
 
@@ -88,6 +93,7 @@ const ProductItem = () => {
   return (
     <div>
       <h3 className="mb-4 title">Edit Product</h3>
+      <h5>Product information</h5>
       <div>
         <form onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -135,62 +141,23 @@ const ProductItem = () => {
             <p className="alert-error">{formik.errors.shortDesc}</p>
           )}
 
-          <TextArea
-            style={{
-              marginBottom: "10px",
-              marginTop: "15px",
-              borderColor: "#00000033",
-              borderRadius: "5px",
-            }}
-            placeholder="Full Description"
-            type="text"
+          <CustomTextarea
             label="Full Description"
-            onChange={formik.handleChange("fullDesc")}
-            onBlur={formik.handleBlur("fullDesc")}
-            value={formik.values.fullDesc}
-            autoSize={{
-              minRows: 3,
-              maxRows: 5,
-            }}
+            onChng={formik.handleChange("fullDesc")}
+            onBlr={formik.handleBlur("fullDesc")}
+            val={formik.values.fullDesc}
           />
 
+          <h5 style={{ marginRight: '10px', marginTop: '30px' }}>Product category</h5>
           <div className="product-list-filter">
-            <div>Filter:</div>
-            <label>
-              <input
-                name="type"
-                type="checkbox"
-                onChange={formik.handleChange("type")}
-                value="Livingroom"
-                checked={
-                  formik.values.type.includes("Livingroom") ? true : false
-                }
-              />
-              Living Room
-            </label>
-            <label>
-              <input
-                name="type"
-                type="checkbox"
-                onChange={formik.handleChange("type")}
-                value="Diningroom"
-                checked={
-                  formik.values.type.includes("Diningroom") ? true : false
-                }
-              />
-              Dining Room
-            </label>
-            <label>
-              <input
-                name="type"
-                type="checkbox"
-                onChange={formik.handleChange("type")}
-                value="Bedroom"
-                checked={formik.values.type.includes("Bedroom") ? true : false}
-              />
-              Bed Room
-            </label>
+            <CheckboxGroup options={options}
+              value={formik.values.type}
+              onChange={(checkedValues) => {
+                formik.setFieldValue("type", checkedValues);
+              }} />
           </div>
+
+          <h5 style={{ marginRight: '10px', marginTop: '30px' }}>Product discount</h5>
           <CustomInput
             type="number"
             label="Discount Price(%)"
@@ -207,8 +174,9 @@ const ProductItem = () => {
               className="btn btn-success border-0 rounded-3 my-5"
               type="submit"
             >
-              Submit
+              Save
             </button>
+
             <Link
               to="/admin/list-product"
               className="btn btn-primary border-0 rounded-3 my-5"
