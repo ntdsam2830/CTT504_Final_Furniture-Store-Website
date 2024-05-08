@@ -16,7 +16,10 @@ const saveOtp = (email) => {
     try {
       const checkMail = await User.findOne({ email: email });
       if (!checkMail) {
-        reject("User not found!");
+        reject({
+          status: 500,
+          message: "User not found!"
+        });
       }
       const otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -71,10 +74,10 @@ const checkAndDeleteOtp = (email, otpCheck) => {
     try {
       const checkOtp = await OTP.findOne({ email: email });
       if (!checkOtp) {
-        reject("No OTP to check");
+        reject({ message: "No OTP to check" });
       } else {
         if (checkOtp.otp !== parseInt(otpCheck)) {
-          reject("OTP is not valid");
+          reject({ message: "OTP is not valid" });
         } else {
           await OTP.deleteOne({ email: email });
           resolve("true");

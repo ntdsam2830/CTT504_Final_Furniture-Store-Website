@@ -134,6 +134,9 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.resetEmail = action.payload.data;
         console.log(action.payload.data);
+        notification.success({
+          message: "OTP has sent to your email",
+        });
         setTimeout(() => {
           window.location.assign("/verify-code");
         }, 500);
@@ -144,7 +147,7 @@ export const authSlice = createSlice({
         state.message = action.error;
         state.isLoading = false;
       })
-      
+
       //sent verification
       .addCase(sendVerification.pending, (state) => {
         state.isLoading = true;
@@ -160,7 +163,7 @@ export const authSlice = createSlice({
       .addCase(sendVerification.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error;
+        state.message = action.payload;
         state.isLoading = false;
       })
 
@@ -173,6 +176,9 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.message = "success";
+        notification.success({
+          message: "Reset Password successfully",
+        });
         setTimeout(() => {
           window.location.assign("/");
         }, 500);
