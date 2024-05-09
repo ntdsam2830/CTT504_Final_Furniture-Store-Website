@@ -14,7 +14,7 @@ const About = () => {
       </div>
       <div class="sub-container">
         <div class="teams">
-          <img src="svg/profile1.svg" alt="" />
+          <img src="svg/dnhoa.jpg" alt="" />
           <div class="name">Nhat Hoa</div>
           <div class="design">Database Engineer</div>
           <div class="about">
@@ -25,7 +25,7 @@ const About = () => {
           </div>
 
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/nhathoa.1810">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
             <a href="#">
@@ -34,14 +34,14 @@ const About = () => {
             <a href="#">
               <FontAwesomeIcon icon={faTwitter} color="#444" />
             </a>
-            <a href="#">
+            <a href="https://github.com/hoadang0305">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>
         </div>
 
         <div class="teams">
-          <img src="svg/profile1.svg" alt="" />
+          <img src="svg/nqhuong.jpg" alt="" />
           <div class="name">Quynh Huong</div>
           <div class="design">Backend Developer</div>
           <div class="about">
@@ -52,7 +52,7 @@ const About = () => {
             reliability.
           </div>
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/ngnqnhhng">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
             <a href="#">
@@ -61,14 +61,14 @@ const About = () => {
             <a href="#">
               <FontAwesomeIcon icon={faTwitter} color="#444" />
             </a>
-            <a href="#">
+            <a href="https://github.com/qhuongng">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>
         </div>
 
         <div class="teams">
-          <img src="svg/profile1.svg" alt="" />
+          <img src="svg/ntdsam.jpg" alt="" />
           <div class="name">Dan Sam</div>
           <div class="design">Frontend Developer</div>
           <div class="about">
@@ -79,7 +79,7 @@ const About = () => {
             efficiently.
           </div>
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/ntdsam2802">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
             <a href="#">
@@ -88,14 +88,14 @@ const About = () => {
             <a href="#">
               <FontAwesomeIcon icon={faTwitter} color="#444" />
             </a>
-            <a href="#">
+            <a href="https://github.com/ntdsam2830">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>
         </div>
 
         <div class="teams">
-          <img src="svg/profile3.svg" alt="" />
+          <img src="svg/nltphuc.jpg" alt="" />
           <div class="name">Tan Phuc</div>
           <div class="design">Business Analyst</div>
           <div class="about">
@@ -106,7 +106,7 @@ const About = () => {
           </div>
 
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/profile.php?id=100008818771172&mibextid=LQQJ4d">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
             <a href="#">
@@ -115,7 +115,7 @@ const About = () => {
             <a href="#">
               <FontAwesomeIcon icon={faTwitter} color="#444" />
             </a>
-            <a href="#">
+            <a href="https://github.com/TanPhuc1805">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>
