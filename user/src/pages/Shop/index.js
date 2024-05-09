@@ -12,9 +12,12 @@ import ProductItem from "../../components/ProductItem";
 import ShopFunction from "./ShopFunction";
 import { Link } from "react-router-dom";
 import { Typography } from "antd";
+import { useLocation } from "react-router-dom";
+
 
 const { Title } = Typography;
 const Shop = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.allProducts) || [];
   const funcProducts = useSelector((state) => state.product.funcProducts) || [];
