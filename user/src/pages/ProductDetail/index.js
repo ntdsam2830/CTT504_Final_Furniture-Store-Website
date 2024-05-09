@@ -5,7 +5,7 @@ import {
   getOneProduct,
 } from "../../features/product/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { Carousel, Row, Col, Rate, Button, Divider } from "antd";
+import { Carousel, Row, Col, Rate, Button, Divider, Input } from "antd";
 import {
   ProductDetailImage,
   ProductDetailInfo,
@@ -17,6 +17,9 @@ import ProductItem from "../../components/ProductItem";
 import { addToCart } from "../../features/user/userSlice";
 import { getAuthUser } from "../../utils/authStorage";
 import { notification } from "antd";
+import ReviewItem from "../../components/ReviewItem";
+
+const { TextArea } = Input;
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -26,6 +29,8 @@ const ProductDetail = () => {
   const product = useSelector((state) => state.product.singleProduct) || null;
   const allProducts = useSelector((state) => state.product.allProducts) || null;
   const [value, setValue] = useState(1);
+  const [reviewList, setReviewList] = useState([{ id: '1', content: 'this slaps yo', likes: 1 }]);
+  const [review, setReview] = useState('');
 
   useEffect(() => {
     dispatch(getOneProduct(id));
@@ -56,9 +61,35 @@ const ProductDetail = () => {
       dispatch(addToCart(newProduct));
     } else {
       notification.error({
-        message: "Need to be login!",
+        message: "Need to be logged in!",
       });
     }
+  };
+
+  const handleReviewInput = (e) => {
+    setReview(e.target.value);
+  }
+
+  const handleAddReview = (e) => {
+    if (user) {
+      setReview(e.target.value);
+      if (review && review.length > 0) {
+        console.log(review);
+      }
+      else {
+        notification.error({
+          message: "Nothing to post.",
+        });
+      }
+    } else {
+      notification.error({
+        message: "Need to be logged in!",
+      });
+    }
+  };
+
+  const colStyle = {
+    padding: '0 2rem 3rem 0',
   };
 
   return (
@@ -127,21 +158,36 @@ const ProductDetail = () => {
             </Col>
           </Row>
           <Divider />
-          <ProductDetailReTitle>Related Products</ProductDetailReTitle>
-          <div style={{ background: "#fff", padding: "1rem" }}>
-            <Row gutter={[16, 16]}>
-              {allProducts
-                .filter((item) => item.id !== id)
-                .slice(0, 4)
+          <Row wrap={false}>
+            <Col span={14} style={colStyle}>
+              <ProductDetailReTitle>Reviews</ProductDetailReTitle>
+              <div style={{ display: 'flex', width: '100%', marginBottom: '2rem' }}>
+                <TextArea rows={4} value={review} onChange={handleReviewInput} placeholder="Write your review here" />
+                <Button style={{ marginLeft: '1rem' }} onClick={handleAddReview}>Post</Button>
+              </div>
+              {reviewList
                 .map((item) => (
-                  <Col span={6} key={item.id}>
-                    <Link to={`/shop/${item.id}`}>
-                      <ProductItem item={item} />
-                    </Link>
-                  </Col>
+                  <ReviewItem item={item} user={user} />
                 ))}
-            </Row>
-          </div>
+            </Col>
+            <Col span={8} style={{ marginLeft: 'auto' }}>
+              <ProductDetailReTitle>Related Products</ProductDetailReTitle>
+              <div style={{ background: "#fff", padding: "1rem" }}>
+                {allProducts
+                  .filter((item) => item.id !== id)
+                  .slice(0, 4)
+                  .map((item) => (
+                    <div style={{ marginBottom: '2rem' }}>
+                      <Col key={item.id}>
+                        <Link to={`/shop/${item.id}`}>
+                          <ProductItem item={item} />
+                        </Link>
+                      </Col>
+                    </div>
+                  ))}
+              </div>
+            </Col>
+          </Row>
         </>
       )}
     </ProductDetailWrapper>
