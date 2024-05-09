@@ -24,6 +24,7 @@ const userRoute = require('./routes/userRouter');
 const cartRoute = require('./routes/cartRouter');
 const productImgRoute = require('./routes/productImgRouter');
 const otpRoute = require('./routes/otpRouter');
+const reviewRoute = require('./routes/reviewRouter');
 //-----------------------------------
 
 app.use('/api/product', productRoute);
@@ -31,6 +32,7 @@ app.use('/api/user', userRoute);
 app.use('/api/cart', cartRoute);
 app.use('/api/productImg', productImgRoute);
 app.use('/api/otp', otpRoute)
+app.use('api/review', reviewRoute);
 app.use('/api/picture', express.static('public'));
 app.use(invalidPathHandler);
 app.use(errorResposerHandler);
