@@ -5,7 +5,7 @@ const {
     registerUser,
     updateProfile,
     resetPassword,
-    getUserData
+    getUserName
 } = require("../services/users.services");
 
 const registerUserController = async (req, res, next) => {
@@ -27,7 +27,7 @@ const getUserDetail = async (req, res, next) => {
     try {
         const userId = req.params.id;
         if (!userId) throw new Error("UserId is required")
-        const user = await getUserData(userId);
+        const user = await getUserName(userId);
         res.status(200).json(user)
     } catch (error) {
         next(error)

@@ -34,6 +34,7 @@ const updateFavorites = async (req, res, next) => {
         if (!listUser || !reviewId) {
             throw new Error("List user and review ID are required")
         }
+
         const updatedReview = await reviewService.updateFavorites(listUser, reviewId);
         res.status(200).json(updatedReview);
     } catch (error) {

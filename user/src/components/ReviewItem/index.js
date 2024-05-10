@@ -1,29 +1,69 @@
-import React, { useState } from "react";
-import {
-  ReviewItemInfo,
-  ReviewItemContent,
-  ReviewItemUser,
-  ReviewItemWrapper,
-  ReviewItemSub
-} from "./styles";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { ReviewItemInfo, ReviewItemContent, ReviewItemUser, ReviewItemWrapper, ReviewItemSub } from './styles';
 import { HeartOutlined, HeartTwoTone } from '@ant-design/icons';
+import { getAuthUser } from '../../utils/authStorage';
+import { useDispatch } from 'react-redux';
+import { notification } from 'antd';
+import { updateReviewFavs } from '../../features/review/reviewSlice';
 
 const ReviewItem = ({ item, style }) => {
-  const [like, setLike] = useState(false);
+  const user = getAuthUser();
+  const dispatch = useDispatch();
+  const [like, setLike] = useState(item.listUserLike.includes(user._id));
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3500/api/user/getUser/${item.userId}`);
+        if (response.data) {
+          setUserName(response.data.userName);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, [item.userId, userName]);
 
   const handleLike = () => {
-    setLike(!like);
+    if (user) {
+      if (like) {
+        const newLikeList = item.listUserLike.filter(id => id !== user._id);
+        const updatedReview = {
+          listUser: newLikeList,
+          reviewId: item._id
+        }
+        dispatch(updateReviewFavs(updatedReview));
+        setLike(false);
+      }
+      else {
+        const newLikeList = [...item.listUserLike, user._id];
+        // const updatedReview = {
+        //   listUser: newLikeList,
+        //   reviewId: item._id
+        // }
+        // dispatch(updateReviewFavs(updatedReview));
+        // setLike(true);
+      }
+    } else {
+      notification.error({
+        message: 'Need to be logged in!',
+      });
+    }
   }
 
   return (
     <ReviewItemWrapper style={style}>
       <ReviewItemInfo>
-        <ReviewItemUser>{item.userId}</ReviewItemUser>
+        <ReviewItemUser>{userName ? userName : item.userId}</ReviewItemUser>
         <ReviewItemContent>{item.content}</ReviewItemContent>
-        <ReviewItemSub>{item.listUserLike.length > 1 ? `${item.listUserLike.length} people found this helpful.` : `1 person found this helpful.`}</ReviewItemSub>
+        <ReviewItemSub>{item.listUserLike.length > 1 ? `${item.listUserLike.length} people found this helpful.` : `${item.listUserLike.length} person found this helpful.`}</ReviewItemSub>
       </ReviewItemInfo>
       <div style={{ margin: '1rem 1.5rem auto auto', cursor: 'pointer' }} onClick={handleLike}>
-        {like ? <HeartTwoTone twoToneColor="#eb2f96" /> : <HeartOutlined />}
+        {like ? <HeartTwoTone twoToneColor='#eb2f96' /> : <HeartOutlined />}
       </div>
     </ReviewItemWrapper>
   );

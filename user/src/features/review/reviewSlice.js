@@ -8,9 +8,6 @@ export const getReviewsByProd = createAsyncThunk(
     try {
       return await ReviewService.getReviewsByProduct(id);
     } catch (error) {
-      notification.error({
-        message: `${error.response.data.message}`,
-      });
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -31,7 +28,7 @@ export const updateReviewFavs = createAsyncThunk(
   'review/updateFav',
   async (updatedReview, thunkAPI) => {
     try {
-      return await ReviewService.update(updatedReview);
+      return await ReviewService.updateFavList(updatedReview);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -83,7 +80,6 @@ export const ReviewSlice = createSlice({
       .addCase(updateReviewFavs.fulfilled, (state, action) => {
         state.isLoading = false;
         state.message = '';
-        state.reviews = action.payload || [];
       })
       .addCase(updateReviewFavs.rejected, (state, action) => {
         state.isLoading = false;

@@ -9,7 +9,7 @@ import { addToCart } from "../../features/user/userSlice";
 import { getAuthUser } from "../../utils/authStorage";
 import { notification } from "antd";
 import ReviewItem from "../../components/ReviewItem";
-import { getReviewsByProd, createReview, updateReviewFavs } from "../../features/review/reviewSlice";
+import { getReviewsByProd, createReview } from "../../features/review/reviewSlice";
 
 const { TextArea } = Input;
 
