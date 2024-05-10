@@ -1,5 +1,6 @@
 const fs = require('fs');
 const ProductInfo = require('../models/Product');
+const productImgService = require('../services/productImg')
 
 const getAllProducts = async (req, res, next) => {
   try {
