@@ -63,18 +63,19 @@ const addProduct = async (req, res, next) => {
   try {
     const product = await ProductInfo.findOne({ name: req.body.name });
     if (product) {
-
-      const filePaths = req.files.map(file => file.path);
-      filePaths.forEach(path => {
-        const path1 = './' + path;
-        fs.unlink(path1)
-      });
       throw new Error("This product aready exists");
     } else {
-      console.log(req.files.path);
-      const pathFile = req.files.map(file => file.path.replace('public', ''));
-      req.body.images = pathFile.map(path => path.replaceAll('\\', '/'));
-      console.log(req.body.images);
+      const files = req.files.map(file => ({
+        data: file.buffer,
+        contentType: file.mimetype
+      }));
+
+      const savedFiles = await Promise.all(files.map(file => productImgService.saveProductImg(file)));
+
+      const savedFileIds = savedFiles.map(savedFile => savedFile.data._id);
+
+      req.body.images = savedFileIds;
+
       const newProduct = await ProductInfo.create({
         name: req.body.name,
         price: req.body.price,
