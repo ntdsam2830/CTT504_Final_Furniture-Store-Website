@@ -7,17 +7,14 @@ const findUserByEmail = async (email) => {
   return user;
 };
 
-const getUserData = async (id) => {
+const getUserName = async (id) => {
   const user = await User.findById(id)
   if (!user) {
     throw new Error("User not found")
   }
   return {
     _id: user._id,
-    userName: user.userName,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    role: user.role
+    userName: user.userName
   }
 }
 
@@ -68,5 +65,5 @@ module.exports = {
   registerUser,
   updateProfile,
   resetPassword,
-  getUserData
+  getUserName
 };

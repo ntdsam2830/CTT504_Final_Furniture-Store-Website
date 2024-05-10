@@ -17,7 +17,7 @@ const addReview = async (req, res, next) => {
 
 const getReview = async (req, res, next) => {
     try {
-        const { productId } = req.params.id;
+        const productId = req.params.id;
         if (!productId) {
             throw new Error("Product ID is required")
         }
@@ -34,6 +34,7 @@ const updateFavorites = async (req, res, next) => {
         if (!listUser || !reviewId) {
             throw new Error("List user and review ID are required")
         }
+
         const updatedReview = await reviewService.updateFavorites(listUser, reviewId);
         res.status(200).json(updatedReview);
     } catch (error) {

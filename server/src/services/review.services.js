@@ -19,7 +19,7 @@ const addReview = async (data) => {
 const getReview = async (productId) => {
     const product = await Product.findById(productId);
     if (!product) throw new Error("Product not found");
-    const reviewList = await Review.find({ productId: productId })
+    const reviewList = await Review.find({ productId: productId }).exec();
     return reviewList || []
 }
 
@@ -30,15 +30,9 @@ const updateFavorites = async (listUser, reviewId) => {
         const user = await User.findById(userId);
         if (!user) throw new Error("User" + userId + "not found");
     })
-    review.listUserLike = listUser
-    await review.save((err, updateReview) => {
-        if (err) {
-            throw new Error(err);
-        } else {
-            return review;
-        }
-    });
-
+    review.listUserLike = listUser;
+    await review.save();
+    return review;
 }
 
 module.exports = { addReview, getReview, updateFavorites }

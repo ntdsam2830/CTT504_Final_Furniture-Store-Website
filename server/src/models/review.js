@@ -19,4 +19,4 @@ const ProductReview = new Schema({
     }
 }, { timestamps: true });
 
-module.export = mongoose.model('ProductReview', ProductReview);
+module.exports = mongoose.model('ProductReview', ProductReview);

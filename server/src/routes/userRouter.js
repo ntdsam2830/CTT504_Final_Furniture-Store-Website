@@ -22,7 +22,7 @@ router.post("/admin-register", registerAdminController);
 router.get("/profile", authGuard, userProfileController);
 router.put("/updateProfile", authGuard, updateProfileController);
 router.post("/resetPassword", resetPasswordController);
-router.get("/getUser/:id", authGuard, getUserDetail);
+router.get("/getUser/:id", getUserDetail);
 
 //-----------------------------------------------------
 module.exports = router;

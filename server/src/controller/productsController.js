@@ -122,7 +122,6 @@ const updateProduct = async (req, res, next) => {
     product.fullDesc = req.body.fullDesc;
     product.type = req.body.type;
 
-
     const updatePro = await product.save();
     res.status(201).json(updatePro);
   } catch (err) {
