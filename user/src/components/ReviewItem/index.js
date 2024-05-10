@@ -10,7 +10,7 @@ import { updateReviewFavs } from '../../features/review/reviewSlice';
 const ReviewItem = ({ item, style }) => {
   const user = getAuthUser();
   const dispatch = useDispatch();
-  const [like, setLike] = useState(item.listUserLike.includes(user._id));
+  const [like, setLike] = useState(false);
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
@@ -25,8 +25,18 @@ const ReviewItem = ({ item, style }) => {
       }
     };
 
+    const setLikeStatus = async () => {
+      if (item.listUserLike.includes(user._id)) {
+        setLike(true);
+      }
+      else {
+        setLike(false);
+      }
+    }
+
     fetchUserData();
-  }, [item.userId, userName]);
+    setLikeStatus();
+  }, [item.userId, userName, item.listUserLike, user._id]);
 
   const handleLike = () => {
     if (user) {
