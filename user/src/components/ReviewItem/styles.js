@@ -7,6 +7,7 @@ export const ReviewItemWrapper = styled.div`
   display: flex;
   border-radius: 1rem;
   width: 92%;
+  margin-bottom: 1rem;
 `;
 
 export const ReviewItemUser = styled.div`

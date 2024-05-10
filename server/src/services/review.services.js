@@ -30,15 +30,9 @@ const updateFavorites = async (listUser, reviewId) => {
         const user = await User.findById(userId);
         if (!user) throw new Error("User" + userId + "not found");
     })
-    review.listUserLike = listUser
-    await review.save((err, updateReview) => {
-        if (err) {
-            throw new Error(err);
-        } else {
-            return review;
-        }
-    });
-
+    review.listUserLike = listUser;
+    await review.save();
+    return review;
 }
 
 module.exports = { addReview, getReview, updateFavorites }

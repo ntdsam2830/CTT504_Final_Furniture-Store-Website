@@ -28,7 +28,7 @@ const ProductDetail = () => {
     dispatch(getOneProduct(id));
     dispatch(getAllProducts());
     dispatch(getReviewsByProd(id));
-  }, [dispatch, id]);
+  }, [dispatch, id, reviews]);
 
   const handleAddButton = () => {
     var newCur = value;
@@ -67,7 +67,13 @@ const ProductDetail = () => {
     if (user) {
       setReview(e.target.value);
       if (review && review.length > 0) {
-        console.log(review);
+        const newReview = {
+          productId: product.id,
+          userId: user._id,
+          content: review,
+        };
+        dispatch(createReview(newReview));
+        dispatch(getReviewsByProd(id));
       }
       else {
         notification.error({

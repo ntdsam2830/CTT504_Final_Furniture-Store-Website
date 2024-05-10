@@ -41,12 +41,12 @@ const ReviewItem = ({ item, style }) => {
       }
       else {
         const newLikeList = [...item.listUserLike, user._id];
-        // const updatedReview = {
-        //   listUser: newLikeList,
-        //   reviewId: item._id
-        // }
-        // dispatch(updateReviewFavs(updatedReview));
-        // setLike(true);
+        const updatedReview = {
+          listUser: newLikeList,
+          reviewId: item._id
+        }
+        dispatch(updateReviewFavs(updatedReview));
+        setLike(true);
       }
     } else {
       notification.error({
