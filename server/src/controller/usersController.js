@@ -5,9 +5,8 @@ const {
     registerUser,
     updateProfile,
     resetPassword,
+    getUserData
 } = require("../services/users.services");
-
-const { compare } = require("bcryptjs");
 
 const registerUserController = async (req, res, next) => {
     try {
@@ -23,6 +22,17 @@ const registerUserController = async (req, res, next) => {
         next(error);
     }
 };
+
+const getUserDetail = async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        if (!userId) throw new Error("UserId is required")
+        const user = await getUserData(userId);
+        res.status(200).json(user)
+    } catch (error) {
+        next(error)
+    }
+}
 
 const loginUserController = async (req, res, next) => {
     try {
@@ -153,4 +163,5 @@ module.exports = {
     loginAdminController,
     registerAdminController,
     resetPasswordController,
+    getUserDetail
 };

@@ -9,6 +9,7 @@ const {
   loginAdminController,
   registerAdminController,
   resetPasswordController,
+  getUserDetail
 } = require("../controller/usersController");
 const { authGuard, isAdmin } = require("../middleware/authMiddleware");
 
@@ -21,6 +22,7 @@ router.post("/admin-register", registerAdminController);
 router.get("/profile", authGuard, userProfileController);
 router.put("/updateProfile", authGuard, updateProfileController);
 router.post("/resetPassword", resetPasswordController);
+router.get("/getUser/:id", authGuard, getUserDetail);
 
 //-----------------------------------------------------
 module.exports = router;
