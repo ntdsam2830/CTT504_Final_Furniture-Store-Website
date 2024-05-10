@@ -12,7 +12,13 @@ const getUserData = async (id) => {
   if (!user) {
     throw new Error("User not found")
   }
-  return user
+  return {
+    _id: user._id,
+    userName: user.userName,
+    email: user.email,
+    phoneNumber: user.phoneNumber,
+    role: user.role
+  }
 }
 
 
