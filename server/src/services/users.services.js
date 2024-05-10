@@ -1,12 +1,26 @@
 // services/userService.js
 
 const User = require("../models/User");
-const { hash } = require("bcryptjs");
 
 const findUserByEmail = async (email) => {
   const user = await User.findOne({ email });
   return user;
 };
+
+const getUserData = async (id) => {
+  const user = await User.findById(id)
+  if (!user) {
+    throw new Error("User not found")
+  }
+  return {
+    _id: user._id,
+    userName: user.userName,
+    email: user.email,
+    phoneNumber: user.phoneNumber,
+    role: user.role
+  }
+}
+
 
 const createUser = async (userDetails) => {
   const { userName, email, phoneNumber, password } = userDetails;
@@ -54,4 +68,5 @@ module.exports = {
   registerUser,
   updateProfile,
   resetPassword,
+  getUserData
 };
