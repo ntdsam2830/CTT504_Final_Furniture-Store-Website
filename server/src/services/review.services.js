@@ -19,7 +19,7 @@ const addReview = async (data) => {
 const getReview = async (productId) => {
     const product = await Product.findById(productId);
     if (!product) throw new Error("Product not found");
-    const reviewList = await Review.find({ productId: productId })
+    const reviewList = await Review.find({ productId: productId }).exec();
     return reviewList || []
 }
 

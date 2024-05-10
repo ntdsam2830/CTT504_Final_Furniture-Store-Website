@@ -32,7 +32,7 @@ app.use('/api/user', userRoute);
 app.use('/api/cart', cartRoute);
 app.use('/api/productImg', productImgRoute);
 app.use('/api/otp', otpRoute)
-app.use('api/review', reviewRoute);
+app.use('/api/review', reviewRoute);
 app.use('/api/picture', express.static('public'));
 app.use(invalidPathHandler);
 app.use(errorResposerHandler);

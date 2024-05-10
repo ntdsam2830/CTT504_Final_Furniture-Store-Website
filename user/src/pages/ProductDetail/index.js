@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  getAllProducts,
-  getOneProduct,
-} from "../../features/product/productSlice";
+import { getAllProducts, getOneProduct } from "../../features/product/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel, Row, Col, Rate, Button, Divider, Input } from "antd";
-import {
-  ProductDetailImage,
-  ProductDetailInfo,
-  ProductDetailInputNumber,
-  ProductDetailReTitle,
-  ProductDetailWrapper,
-} from "./styles";
+import { ProductDetailImage, ProductDetailInfo, ProductDetailInputNumber, ProductDetailReTitle, ProductDetailWrapper } from "./styles";
 import ProductItem from "../../components/ProductItem";
 import { addToCart } from "../../features/user/userSlice";
 import { getAuthUser } from "../../utils/authStorage";
 import { notification } from "antd";
 import ReviewItem from "../../components/ReviewItem";
+import { getReviewsByProd, createReview, updateReviewFavs } from "../../features/review/reviewSlice";
 
 const { TextArea } = Input;
 
@@ -29,12 +21,13 @@ const ProductDetail = () => {
   const product = useSelector((state) => state.product.singleProduct) || null;
   const allProducts = useSelector((state) => state.product.allProducts) || null;
   const [value, setValue] = useState(1);
-  const [reviewList, setReviewList] = useState([{ id: '1', content: 'this slaps yo', likes: 1 }]);
+  const reviews = useSelector((state) => state.review.reviews) || [];
   const [review, setReview] = useState('');
 
   useEffect(() => {
     dispatch(getOneProduct(id));
     dispatch(getAllProducts());
+    dispatch(getReviewsByProd(id));
   }, [dispatch, id]);
 
   const handleAddButton = () => {
@@ -165,9 +158,9 @@ const ProductDetail = () => {
                 <TextArea rows={4} value={review} onChange={handleReviewInput} placeholder="Write your review here" />
                 <Button style={{ marginLeft: '1rem' }} onClick={handleAddReview}>Post</Button>
               </div>
-              {reviewList
+              {reviews
                 .map((item) => (
-                  <ReviewItem item={item} user={user} />
+                  <ReviewItem item={item} />
                 ))}
             </Col>
             <Col span={8} style={{ marginLeft: 'auto' }}>

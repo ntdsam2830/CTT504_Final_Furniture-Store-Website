@@ -17,7 +17,7 @@ const addReview = async (req, res, next) => {
 
 const getReview = async (req, res, next) => {
     try {
-        const { productId } = req.params.id;
+        const productId = req.params.id;
         if (!productId) {
             throw new Error("Product ID is required")
         }
