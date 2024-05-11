@@ -26,7 +26,7 @@ const ReviewItem = ({ item, style }) => {
     };
 
     const setLikeStatus = async () => {
-      if (item.listUserLike.includes(user._id)) {
+      if (user && item.listUserLike.includes(user._id)) {
         setLike(true);
       }
       else {
@@ -36,7 +36,7 @@ const ReviewItem = ({ item, style }) => {
 
     fetchUserData();
     setLikeStatus();
-  }, [item.userId, userName, item.listUserLike, user._id]);
+  }, [item.userId, userName, item.listUserLike, user]);
 
   const handleLike = () => {
     if (user) {
