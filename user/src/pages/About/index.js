@@ -28,12 +28,6 @@ const About = () => {
             <a href="https://www.facebook.com/nhathoa.1810">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
             <a href="https://github.com/hoadang0305">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
@@ -45,7 +39,7 @@ const About = () => {
           <div class="name">Quynh Huong</div>
           <div class="design">Backend Developer</div>
           <div class="about">
-            Quynh Huong designs and implements server-side logic. Collaborating
+            Collaborating
             closely with frontend developer and database engineer, Quynh Huong
             ensures robust data management and seamless communication between
             server and client, driving project success with efficiency and
@@ -54,12 +48,6 @@ const About = () => {
           <div class="social-links">
             <a href="https://www.facebook.com/ngnqnhhng">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
             </a>
             <a href="https://github.com/qhuongng">
               <FontAwesomeIcon icon={faGithub} color="#444" />
@@ -82,12 +70,6 @@ const About = () => {
             <a href="https://www.facebook.com/ntdsam2802">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
             <a href="https://github.com/ntdsam2830">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
@@ -108,12 +90,6 @@ const About = () => {
           <div class="social-links">
             <a href="https://www.facebook.com/profile.php?id=100008818771172&mibextid=LQQJ4d">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
             </a>
             <a href="https://github.com/TanPhuc1805">
               <FontAwesomeIcon icon={faGithub} color="#444" />
