@@ -25,13 +25,16 @@ export const FormTitle = styled.div`
   color: #000;
   font-weight: 600;
   font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
 `;
 
 export const FormInputWrapper = styled(Form)`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: left;
 
   margin-top: 1rem;
   width: 60%;
@@ -46,7 +49,8 @@ export const FormButton = styled(Button)`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 0.2rem;
+  margin: 0.2rem;
+  padding: 
   width: 30%;
   background: #b88e2f;
 

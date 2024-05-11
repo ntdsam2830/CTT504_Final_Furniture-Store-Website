@@ -2,14 +2,8 @@ import React from "react";
 import BreadcrumbCustom from "../../components/Breadcrumb";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import {
-  FormButton,
-  FormError,
-  FormInputWrapper,
-  FormTitle,
-  FormWrapper,
-} from "./styles";
-import { Form, Input } from "antd";
+import { FormButton, FormError, FormTitle, FormWrapper } from "./styles";
+import { Form, Input, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../features/user/userSlice";
 
@@ -34,50 +28,59 @@ const Login = () => {
     },
   });
   return (
-    <div>
-      <BreadcrumbCustom />
-
-      <FormWrapper>
-        <div>
+    <FormWrapper>
+      <div style={{ width: "40%", margin: "3rem" }}>
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={formik.handleSubmit}
+          autoComplete="off"
+        >
           <FormTitle>Login Account</FormTitle>
+          <Form.Item label="Email" name="email">
+            <Input
+              values={formik.values.email}
+              onChange={formik.handleChange("email")}
+              onPressEnter={formik.handleBlur("email")}
+            />{" "}
+            <FormError>{formik.touched.email && formik.errors.email}</FormError>
+          </Form.Item>
 
-          <FormInputWrapper onFinish={formik.handleSubmit}>
-            <Form.Item label="Email" name="email">
-              <Input
-                values={formik.values.email}
-                onChange={formik.handleChange("email")}
-                onPressEnter={formik.handleBlur("email")}
-              />
-              <FormError>
-                {formik.touched.email && formik.errors.email}
-              </FormError>
-            </Form.Item>
+          <Form.Item label="Password" name="password">
+            <Input.Password
+              values={formik.values.password}
+              onChange={formik.handleChange("password")}
+              onPressEnter={formik.handleBlur("password")}
+            />
+            <FormError>
+              {formik.touched.password && formik.errors.password}
+            </FormError>
+          </Form.Item>
 
-            <Form.Item label="Password" name="password">
-              <Input.Password
-                values={formik.values.password}
-                onChange={formik.handleChange("password")}
-                onPressEnter={formik.handleBlur("password")}
-              />
-              <FormError>
-                {formik.touched.password && formik.errors.password}
-              </FormError>
-            </Form.Item>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FormButton type="primary" htmlType="submit">
-                Login
-              </FormButton>
-            </div>
-          </FormInputWrapper>
-        </div>
-      </FormWrapper>
-    </div>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <FormButton type="primary" htmlType="submit">
+              Login
+            </FormButton>
+          </Form.Item>
+        </Form>
+      </div>
+    </FormWrapper>
   );
 };
 
