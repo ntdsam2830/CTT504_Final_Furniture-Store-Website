@@ -2,22 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProductReview = new Schema({
-    product: {
-        type: Schema.Types.ObjectId,
-        ref: 'ProductInfo',
+    productId: {
+        type: String,
         required: true
     },
     userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'userInfo'
+        type: String,
+        required: true
     },
-    data: {
+    content: {
         type: String
     },
-    userRating:{
-        type: Number,
+    listUserLike: {
+        type: Array,
         required: true
     }
-},{timestamps: true});
+}, { timestamps: true });
 
-module.export = mongoose.model('ProductReview',ProductReview);
+module.exports = mongoose.model('ProductReview', ProductReview);

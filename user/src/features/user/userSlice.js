@@ -270,12 +270,7 @@ export const authSlice = createSlice({
       .addCase(getUserCart.fulfilled, (state, action) => {
         state.isLoading = false;
         state.message = "";
-        state.userCart = action.payload;
-        let result = 0;
-        for (let i = 0; i < state.userCart.length; i++) {
-          result += state.userCart[i].total;
-        }
-        state.userCart.total = result;
+        state.userCart = action.payload || [];
       })
       .addCase(getUserCart.rejected, (state, action) => {
         state.isLoading = false;

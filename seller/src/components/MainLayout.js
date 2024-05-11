@@ -30,7 +30,6 @@ const MainLayout = () => {
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
             <span className="sm-logo">
-              <img width={50} height={32} src="logo_web.png" alt="logo" />
             </span>
             <span className="lg-logo">
               <h5

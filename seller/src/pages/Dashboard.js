@@ -1,94 +1,45 @@
-import React from "react";
-import { BsArrowDownRight, BsArrowUpRight } from "react-icons/bs";
+import React, { useEffect } from "react";
 import { Column } from "@ant-design/plots";
-import { Table } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../features/product/productSlice";
 
-const columns = [
-  {
-    title: "SNo",
-    dataIndex: "key",
-  },
-  {
-    title: "Name",
-    dataIndex: "name",
-  },
-  {
-    title: "Product",
-    dataIndex: "product",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-  },
-];
-const data1 = [];
-for (let i = 0; i < 46; i++) {
-  data1.push({
-    key: i,
-    name: `Edward King ${i}`,
-    product: 32,
-    status: `London, Park Lane no. ${i}`,
+const Dashboard = () => {
+  const dispatch = useDispatch();
+  const dataSale = useSelector((state) => {
+    let products = state.product.products;
+
+    if (products) {
+      let sorted = [...products].sort((a, b) => b.quantitySale - a.quantitySale);
+      let top10 = sorted.slice(0, 10);
+
+      return top10;
+    }
   });
-}
 
-function Dashboard() {
-  const data = [
-    {
-      type: "January",
-      sales: 38,
-    },
-    {
-      type: "February",
-      sales: 52,
-    },
-    {
-      type: "March",
-      sales: 61,
-    },
-    {
-      type: "April",
-      sales: 145,
-    },
-    {
-      type: "May",
-      sales: 48,
-    },
-    {
-      type: "June",
-      sales: 10,
-    },
-    {
-      type: "July",
-      sales: 38,
-    },
-    {
-      type: "August",
-      sales: 45,
-    },
-    {
-      type: "September",
-      sales: 52,
-    },
-    {
-      type: "October",
-      sales: 18,
-    },
-    {
-      type: "November",
-      sales: 25,
-    },
-    {
-      type: "December",
-      sales: 38,
-    },
-  ];
-  const config = {
-    data,
-    xField: "type",
-    yField: "sales",
-    color: ({ type }) => {
-      return "#ffd333";
-    },
+  const dataRating = useSelector((state) => {
+    let products = state.product.products;
+
+    if (products) {
+      let sorted = [...products].sort((a, b) => b.rating - a.rating);
+      let top10 = sorted.slice(0, 10);
+
+      return top10;
+    }
+  });
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
+  if (!dataSale && !dataRating) {
+    return <div>Loading...</div>;
+  }
+
+  const config1 = {
+    data: dataSale,
+    xField: "name",
+    yField: "quantitySale",
+    color: "#ffd333",
     label: {
       position: "middle",
       style: {
@@ -103,70 +54,56 @@ function Dashboard() {
       },
     },
     meta: {
-      type: {
-        alias: "Month",
+      name: {
+        alias: "Product",
       },
-      sales: {
-        alias: "Income",
+      quantitySale: {
+        alias: "Items sold",
       },
     },
   };
+
+  const config2 = {
+    data: dataRating,
+    xField: "name",
+    yField: "rating",
+    color: "#ffd333",
+    label: {
+      position: "middle",
+      style: {
+        fill: "#FFFFFF",
+        opacity: 1,
+      },
+    },
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+    },
+    meta: {
+      name: {
+        alias: "Product",
+      },
+      rating: {
+        alias: "Rating",
+      },
+    },
+  };
+
   return (
     <div>
       <h3 className="mb-4 title">Dashboard</h3>
-      <div className="d-flex justify-content-between align-items-center gap-3">
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
-          <div>
-            <p className="desc">Total</p>
-            <h4 className="mb-0">$1100</h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6>
-              <BsArrowDownRight />
-              32%
-            </h6>
-            <p className="mb-0 desc">Compared to April 2022</p>
-          </div>
-        </div>
-
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
-          <div>
-            <p className="desc">Total</p>
-            <h4 className="mb-0">$1100</h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6 className="red">
-              <BsArrowDownRight />
-              32%
-            </h6>
-            <p className="mb-0 desc">Compared to April 2022</p>
-          </div>
-        </div>
-
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 rounded-3">
-          <div>
-            <p className="desc">Total</p>
-            <h4 className="mb-0">$1100</h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6 className="green">
-              <BsArrowDownRight />
-              32%
-            </h6>
-            <p className="mb-0 desc">Compared to April 2022</p>
-          </div>
+      <div className="mt-4">
+        <h3 className="mb-4">Sales</h3>
+        <div>
+          <Column {...config1} />
         </div>
       </div>
       <div className="mt-4">
-        <h3 className="mb-4">Income Statics</h3>
+        <h3 className="mb-4">Ratings</h3>
         <div>
-          <Column {...config} />;
-        </div>
-      </div>
-      <div className="mt-4">
-        <h3 className="mb-4">Recent Orders</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+          <Column {...config2} />
         </div>
       </div>
     </div>

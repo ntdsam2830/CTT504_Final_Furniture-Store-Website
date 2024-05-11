@@ -19,7 +19,7 @@
 }
 
 .sub-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: auto;
   padding: 30px 0;
   display: flex;
@@ -28,8 +28,9 @@
 }
 
 .teams {
-  margin: 10px;
-  padding: 22px;
+  margin: 1rem;
+  padding: 1.5rem;
+  width: 20%;
   max-width: 30%;
   cursor: pointer;
   transition: 0.4s;
@@ -59,7 +60,8 @@
 }
 
 .about {
-  margin: 20px 0;
+  margin: 25px 0;
+
   height: 25%;
   font-weight: lighter;
   color: #4e4e4e;
@@ -96,5 +98,8 @@
 @media screen and (max-width: 800px) {
   .about {
     height: 40%;
+  }
+  .teams {
+    width: 50%;
   }
 }

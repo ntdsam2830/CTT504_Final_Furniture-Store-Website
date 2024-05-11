@@ -7,6 +7,7 @@ import {
   HeaderTitle,
 } from "./styles";
 import { BROWSERANGEDATA } from "./constants";
+import { Link } from "react-router-dom";
 
 const BrowseRange = () => {
   return (
@@ -15,10 +16,12 @@ const BrowseRange = () => {
       <div>Discover diversity: browse our range for tailored quality.</div>
       <BrowseRangeRow justify="space-around">
         {BROWSERANGEDATA.map((item) => (
-          <BrowseRangeCol>
-            <BrowseRangeImage src={item.image} alt={item.name} />
-            <div>{item.name}</div>
-          </BrowseRangeCol>
+          <Link to="/shop">
+            <BrowseRangeCol>
+              <BrowseRangeImage src={item.image} alt={item.name} style={{ cursor: "pointer" }} />
+              <div>{item.name}</div>
+            </BrowseRangeCol>
+          </Link>
         ))}
       </BrowseRangeRow>
     </BrowseRangeWrapper>

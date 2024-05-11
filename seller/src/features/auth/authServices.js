@@ -8,6 +8,18 @@ const login = async (user) => {
   }
   return response.data;
 };
+const sendEmail = async (resetEmail) => {
+  const response = await axios.post(`${base_url}otp/sendOtp`, resetEmail);
+  return response;
+};
+const sendVerification = async (data) => {
+  const response = await axios.post(`${base_url}otp/checkOtp`, data);
+  return response;
+};
+const sendNewPassword = async (newpass) => {
+  const response = await axios.post(`${base_url}user/resetPassword`, newpass);
+  return response;
+};
 const getOrders = async () => {
   const response = await axios.get(`${base_url}user/getallorders`, config);
 
@@ -25,6 +37,9 @@ const getOrder = async (id) => {
 
 const authService = {
   login,
+  sendEmail,
+  sendVerification,
+  sendNewPassword,
   getOrders,
   getOrder,
 };

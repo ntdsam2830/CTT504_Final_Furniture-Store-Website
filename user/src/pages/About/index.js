@@ -14,138 +14,84 @@ const About = () => {
       </div>
       <div class="sub-container">
         <div class="teams">
-          <img src="svg/profile1.svg" alt="" />
-          <div class="name">Thuan Phat</div>
-          <div class="design">Database Administrator</div>
+          <img src="svg/dnhoa.jpg" alt="" />
+          <div class="name">Nhat Hoa</div>
+          <div class="design">Database Engineer</div>
           <div class="about">
             Ensuring data integrity by managing database design, security, and
-            performance. Thuan Phat troubleshoots issues, implements backups,
-            and optimizes structures for efficient data management, contributing
-            to the stability of Future Furniture.
+            performance. Nhat Hoa troubleshoots issues, implements backups, and
+            optimizes structures for efficient data management, contributing to
+            the stability of Future Furniture.
           </div>
 
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/nhathoa.1810">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
-            <a href="#">
+            <a href="https://github.com/hoadang0305">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>
         </div>
 
         <div class="teams">
-          <img src="svg/profile1.svg" alt="" />
-          <div class="name">Man Nhi</div>
-          <div class="design">Project Manager</div>
-
+          <img src="svg/nqhuong.jpg" alt="" />
+          <div class="name">Quynh Huong</div>
+          <div class="design">Backend Developer</div>
           <div class="about">
-            Man Nhi is the leader of Future Furniture who guides this team
-            through planning, execution, and successful completion of this
-            website. Setting goals, managing resources, and ensuring alignment
-            with Future Furniture's vision, fostering collaboration and
-            motivation for innovation and success.
+            Collaborating
+            closely with frontend developer and database engineer, Quynh Huong
+            ensures robust data management and seamless communication between
+            server and client, driving project success with efficiency and
+            reliability.
           </div>
-
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/ngnqnhhng">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
-            <a href="#">
+            <a href="https://github.com/qhuongng">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>
         </div>
 
         <div class="teams">
-          <img src="svg/profile1.svg" alt="" />
-          <div class="name">Nhat Hoa</div>
-          <div class="design">Developer</div>
-          <div class="about">
-            Nhat Hoa takes the main responsibility of creating and implementing
-            software solutions, writing, testing, and debugging code
-            collaboratively. He ensures seamless integration, adheres to coding
-            standards, and contributes to the success of Future Furniture by
-            delivering high-quality solutions.
-          </div>
-
-          <div class="social-links">
-            <a href="#">
-              <FontAwesomeIcon icon={faFacebook} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faGithub} color="#444" />
-            </a>
-          </div>
-        </div>
-
-        <div class="teams">
-          <img src="svg/profile2.svg" alt="" />
-          <div class="name">Trung Kien</div>
-          <div class="design">Tester, Designer</div>
-          <div class="about">
-            The team's designer and tester. Trung Kien is a versatile
-            professional adept at creating visually appealing designs and
-            ensuring software quality. He contributes to delivering a seamless
-            and high-quality end product for Future Furniture.
-          </div>
-
-          <div class="social-links">
-            <a href="#">
-              <FontAwesomeIcon icon={faFacebook} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faGithub} color="#444" />
-            </a>
-          </div>
-        </div>
-
-        <div class="teams">
-          <img src="svg/profile3.svg" alt="" />
+          <img src="svg/ntdsam.jpg" alt="" />
           <div class="name">Dan Sam</div>
+          <div class="design">Frontend Developer</div>
+          <div class="about">
+            Dan Sam bridges design concepts with functional web interfaces to
+            ensure seamless user experiences. Collaborating closely with backend
+            developer, Dan Sam plays a pivotal role in crafting visually
+            appealing and intuitive interfaces that meet project objectives
+            efficiently.
+          </div>
+          <div class="social-links">
+            <a href="https://www.facebook.com/ntdsam2802">
+              <FontAwesomeIcon icon={faFacebook} color="#444" />
+            </a>
+            <a href="https://github.com/ntdsam2830">
+              <FontAwesomeIcon icon={faGithub} color="#444" />
+            </a>
+          </div>
+        </div>
+
+        <div class="teams">
+          <img src="svg/nltphuc.jpg" alt="" />
+          <div class="name">Tan Phuc</div>
           <div class="design">Business Analyst</div>
           <div class="about">
             A bridge between what our team needs and what Future Furniture
-            delivers. Dan Sam translates requirements, analyzes information, and
-            ensures smooth communication within the team. She plays a key role
-            in making sure our project meets its goals effectively.
+            delivers. Tan Phuc translates requirements, analyzes information,
+            and ensures smooth communication within the team. He plays a key
+            role in making sure our project meets its goals effectively.
           </div>
 
           <div class="social-links">
-            <a href="#">
+            <a href="https://www.facebook.com/profile.php?id=100008818771172&mibextid=LQQJ4d">
               <FontAwesomeIcon icon={faFacebook} color="#444" />
             </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faInstagram} color="#444" />
-            </a>
-            <a href="#">
-              <FontAwesomeIcon icon={faTwitter} color="#444" />
-            </a>
-            <a href="#">
+            <a href="https://github.com/TanPhuc1805">
               <FontAwesomeIcon icon={faGithub} color="#444" />
             </a>
           </div>

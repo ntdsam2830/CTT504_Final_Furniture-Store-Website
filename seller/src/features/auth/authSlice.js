@@ -12,6 +12,7 @@ const user = getAuthUser();
 const initialState = {
   user: user,
   orders: [],
+  resetEmail: "",
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -30,7 +31,46 @@ export const login = createAsyncThunk(
     }
   }
 );
-
+export const sendEmail = createAsyncThunk(
+  "auth/sendEmail",
+  async (userData, thunkAPI) => {
+    try {
+      // initialState.resetEmail = userData;
+      return await authService.sendEmail(userData);
+    } catch (error) {
+      notification.error({
+        message: `${error.response.data.message}`,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const sendVerification = createAsyncThunk(
+  "auth/sendVerification",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.sendVerification(userData);
+    } catch (error) {
+      notification.error({
+        message: `${error.response.data.message}`,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const sendNewPassword = createAsyncThunk(
+  "auth/sendNewPassword",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.sendNewPassword(userData);
+    } catch (error) {
+      notification.error({
+        message: `${error.response.data.message}`,
+      });
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const getOrders = createAsyncThunk(
   "order/get-orders",
   async (thunkAPI) => {
@@ -79,6 +119,71 @@ export const authSlice = createSlice({
         }, 500);
       })
       .addCase(login.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+      //reset email
+      .addCase(sendEmail.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendEmail.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.resetEmail = action.payload.data;
+        console.log(action.payload.data);
+        notification.success({
+          message: "OTP has sent to your email",
+        });
+        setTimeout(() => {
+          window.location.assign("/verify-code");
+        }, 500);
+      })
+      .addCase(sendEmail.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+        state.isLoading = false;
+      })
+
+      //sent verification
+      .addCase(sendVerification.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendVerification.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        setTimeout(() => {
+          window.location.assign("/reset-password");
+        }, 500);
+      })
+      .addCase(sendVerification.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.payload;
+        state.isLoading = false;
+      })
+
+      //send new pass
+      .addCase(sendNewPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(sendNewPassword.fulfilled, (state, action) => {
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "success";
+        notification.success({
+          message: "Reset Password successfully",
+        });
+        setTimeout(() => {
+          window.location.assign("/");
+        }, 500);
+      })
+      .addCase(sendNewPassword.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;

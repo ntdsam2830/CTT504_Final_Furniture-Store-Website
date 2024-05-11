@@ -72,6 +72,5 @@ export const ProductDetailReTitle = styled.div`
   font-size: 2rem;
   font-weight: 500;
   display: flex;
-  justify-content: center;
   margin-bottom: 1rem;
 `;

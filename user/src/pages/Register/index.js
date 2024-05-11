@@ -45,69 +45,83 @@ const Register = () => {
   });
 
   return (
-    <div>
-      <BreadcrumbCustom />
-
-      <FormWrapper>
-        <div>
+    <FormWrapper>
+      <div style={{ width: "40%", margin: "3rem" }}>
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={formik.handleSubmit}
+          autoComplete="off"
+        >
           <FormTitle>Create Account</FormTitle>
+          <Form.Item label="Username" name="userName">
+            <Input
+              values={formik.values.userName}
+              onChange={formik.handleChange("userName")}
+              onPressEnter={formik.handleBlur("userName")}
+            />
+            <FormError>
+              {formik.touched.userName && formik.errors.userName}
+            </FormError>
+          </Form.Item>
 
-          <FormInputWrapper onFinish={formik.handleSubmit}>
-            <Form.Item label="Username" name="userName">
-              <Input
-                values={formik.values.userName}
-                onChange={formik.handleChange("userName")}
-                onPressEnter={formik.handleBlur("userName")}
-              />
-              <FormError>
-                {formik.touched.userName && formik.errors.userName}
-              </FormError>
-            </Form.Item>
+          <Form.Item label="Email" name="email">
+            <Input
+              values={formik.values.email}
+              onChange={formik.handleChange("email")}
+              onPressEnter={formik.handleBlur("email")}
+              type="email"
+            />
+            <FormError>{formik.touched.email && formik.errors.email}</FormError>
+          </Form.Item>
 
-            <Form.Item label="Mobile number" name="phoneNumber">
-              <Input
-                values={formik.values.phoneNumber}
-                onChange={formik.handleChange("phoneNumber")}
-                onPressEnter={formik.handleBlur("phoneNumber")}
-                type="tel"
-              />
-              <FormError>
-                {formik.touched.phoneNumber && formik.errors.phoneNumber}
-              </FormError>
-            </Form.Item>
+          <Form.Item label="Phone" name="phoneNumber">
+            <Input
+              values={formik.values.phoneNumber}
+              onChange={formik.handleChange("phoneNumber")}
+              onPressEnter={formik.handleBlur("phoneNumber")}
+              type="tel"
+            />
+            <FormError>
+              {formik.touched.phoneNumber && formik.errors.phoneNumber}
+            </FormError>
+          </Form.Item>
 
-            <Form.Item label="Email" name="email">
-              <Input
-                values={formik.values.email}
-                onChange={formik.handleChange("email")}
-                onPressEnter={formik.handleBlur("email")}
-                type="email"
-              />
-              <FormError>
-                {formik.touched.email && formik.errors.email}
-              </FormError>
-            </Form.Item>
+          <Form.Item label="Password" name="password">
+            <Input.Password
+              values={formik.values.password}
+              onChange={formik.handleChange("password")}
+              onPressEnter={formik.handleBlur("password")}
+            />
+            <FormError>
+              {formik.touched.password && formik.errors.password}
+            </FormError>
+          </Form.Item>
 
-            <Form.Item label="Password" name="password">
-              <Input.Password
-                values={formik.values.password}
-                onChange={formik.handleChange("password")}
-                onPressEnter={formik.handleBlur("password")}
-              />
-              <FormError>
-                {formik.touched.password && formik.errors.password}
-              </FormError>
-            </Form.Item>
-
-            <Form.Item>
-              <FormButton type="primary" htmlType="submit">
-                Created
-              </FormButton>
-            </Form.Item>
-          </FormInputWrapper>
-        </div>
-      </FormWrapper>
-    </div>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <FormButton type="primary" htmlType="submit">
+              Register
+            </FormButton>
+          </Form.Item>
+        </Form>
+      </div>
+    </FormWrapper>
   );
 };
 

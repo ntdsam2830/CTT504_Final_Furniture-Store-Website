@@ -1,17 +1,28 @@
-const router = require('express').Router();
-const {registerUser, loginUser, userProfile, updateProfile, loginAdmin,registerAdmin} = require('../controller/usersController');
-const {authGuard,isAdmin} = require('../middleware/authMiddleware');
+// routes/userRouter.js
+
+const router = require("express").Router();
+const {
+  registerUserController,
+  loginUserController,
+  userProfileController,
+  updateProfileController,
+  loginAdminController,
+  registerAdminController,
+  resetPasswordController,
+  getUserDetail
+} = require("../controller/usersController");
+const { authGuard, isAdmin } = require("../middleware/authMiddleware");
+
 //---------------------------------------------
-//CREATE
-router.post('/register',registerUser);
-router.post('/login',loginUser);
-router.post('/admin-login',isAdmin,loginAdmin);
-router.post('/admin-register',registerAdmin);
-router.get('/profile',authGuard, userProfile);
-router.put('/updateProfile', authGuard, updateProfile);
-
-
-
+// CREATE
+router.post("/register", registerUserController);
+router.post("/login", loginUserController);
+router.post("/admin-login", isAdmin, loginAdminController);
+router.post("/admin-register", registerAdminController);
+router.get("/profile", authGuard, userProfileController);
+router.put("/updateProfile", authGuard, updateProfileController);
+router.post("/resetPassword", resetPasswordController);
+router.get("/getUser/:id", getUserDetail);
 
 //-----------------------------------------------------
 module.exports = router;

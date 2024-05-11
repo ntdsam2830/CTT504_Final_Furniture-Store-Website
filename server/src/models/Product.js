@@ -11,15 +11,15 @@ const ProductInfo = new Schema({
         type: Number,
         required: true
     },
-    originPrice:{
+    originPrice: {
         type: Number,
         require: true
     },
-    quantity:{// số lượng
+    quantity: {// số lượng
         type: Number,
         required: true
     },
-    quantitySale:{// số lượng đã bán
+    quantitySale: {// số lượng đã bán
         type: Number,
         default: 0
     },
@@ -33,7 +33,7 @@ const ProductInfo = new Schema({
         require: true,
         default: ""
     },
-    type:{
+    type: {
         type: Array,//vd: [Phòng khách],...
         required: true
     },
@@ -47,6 +47,6 @@ const ProductInfo = new Schema({
     discount: {
         type: String,
     }
-},{timestamps: false, toJSON: {virtuals: true}});// timestamp true thì có lưu thêm thuộc tính thời gian tạo=
+}, { timestamps: false, toJSON: { virtuals: true } });// timestamp true thì có lưu thêm thuộc tính thời gian tạo=
 
-module.exports = mongoose.model('ProductInfo',ProductInfo);
+module.exports = mongoose.model('ProductInfo', ProductInfo);
