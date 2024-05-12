@@ -92,6 +92,13 @@ const addProduct = async (req, res, next) => {
       if (!newProduct) {
         throw new Error("Create failed!")
       }
+
+      res.set({
+        'Access-Control-Allow-Origin': `${process.env.SELLER_URL}`,
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      });
+
       res.status(201).json(newProduct);
     }
 
