@@ -18,7 +18,7 @@ const createProduct = async (product) => {
     {
       headers: {
         Authorization: `Bearer ${token !== null ? token : ""}`,
-        Accept: "application/json",
+        // Accept: "application/json",
         "Content-Type": "multipart/form-data",
       },
     }
