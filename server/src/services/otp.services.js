@@ -1,5 +1,5 @@
 const OTP = require("../models/Otp");
-const User = require("../models/User");
+const User = require("../models/user");
 const nodemailer = require("nodemailer");
 const UserControl = require("../controller/usersController");
 require("dotenv").config();

@@ -48,5 +48,4 @@ userInfo.methods.comparePassword = async function (enteredPassword) {
     return await compare(enteredPassword, this.password);
 }
 
-
 module.exports = mongoose.model('UserInfo', userInfo);

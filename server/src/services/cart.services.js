@@ -1,7 +1,7 @@
 // services/cartService.js
 
 const CartInfo = require("../models/Cart");
-const User = require('../models/User');
+const User = require('../models/user');
 const Product = require('../models/Product');
 
 const findOrCreateCart = async (userId) => {
