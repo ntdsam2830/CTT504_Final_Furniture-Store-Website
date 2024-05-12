@@ -73,7 +73,7 @@ const addProduct = async (req, res, next) => {
 
       const savedFiles = await Promise.all(files.map(file => productImgService.saveProductImg(file)));
 
-      const savedFileIds = savedFiles.map(savedFile => savedFile.data._id.toString());
+      const savedFileIds = savedFiles.map(savedFile => savedFile.data._id);
 
       req.body.images = savedFileIds;
 
