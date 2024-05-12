@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require('mongoose');
 const {
   errorResposerHandler,
   invalidPathHandler,
@@ -38,4 +39,15 @@ app.use(invalidPathHandler);
 app.use(errorResposerHandler);
 // đường dẫn của 1 file ảnh là: /Livingroom/maimz_Sofa/img1.webp
 //-----------------------------------
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(console.log("Connected to MongoDB"))
+  .catch(err => console.log(err));
+
+//-----------------------------------
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT}`);
+});
+
 module.exports = app;
