@@ -8,13 +8,8 @@
         {
             "src": "/(.*)",
             "dest": "/src/app.js",
-            "headers": { "key": "Cache-Control", "value": "no-cache" }
-        }
-    ],
-    "headers": [
-        {
-            "source": "/(.*)",
             "headers": [
+                { "key": "Cache-Control", "value": "no-cache" },
                 { "key": "Access-Control-Allow-Credentials", "value": "true" },
                 { "key": "Access-Control-Allow-Origin", "value": "*" },
                 {
