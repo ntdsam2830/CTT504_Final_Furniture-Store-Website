@@ -16,9 +16,11 @@ const corsOption = {
   origin: [process.env.SELLER_URL, process.env.USER_URL],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  succ
 };
-app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
+app.options('*', cors(corsOption));
+// app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
 
 //-----------------------------------
 //routes & controller
