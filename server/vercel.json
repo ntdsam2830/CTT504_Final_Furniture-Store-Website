@@ -6,8 +6,8 @@
     ],
     "rewrites": [
         {
-            "src": "/(.*)",
-            "dest": "/src/app.js",
+            "source": "/(.*)",
+            "destination": "/src/app.js",
             "headers": { "key": "Cache-Control", "value": "no-cache" }
         }
     ],
