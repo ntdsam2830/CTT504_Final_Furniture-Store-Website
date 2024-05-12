@@ -17,6 +17,11 @@ const corsOption = {
   credentials: true,
 };
 app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 //-----------------------------------
 //routes & controller
