@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { notification } from 'antd';
 import { updateReviewFavs } from '../../features/review/reviewSlice';
 
+
 const ReviewItem = ({ item, style }) => {
   const user = getAuthUser();
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ReviewItem = ({ item, style }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3500/api/user/getUser/${item.userId}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/getUser/${item.userId}`);
         if (response.data) {
           setUserName(response.data.userName);
         }

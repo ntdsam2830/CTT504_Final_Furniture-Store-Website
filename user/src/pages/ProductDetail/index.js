@@ -13,6 +13,8 @@ import { getReviewsByProd, createReview } from "../../features/review/reviewSlic
 
 const { TextArea } = Input;
 
+
+
 const ProductDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -101,7 +103,7 @@ const ProductDetail = () => {
                 {product.images.map((image) => (
                   <ProductDetailImage>
                     <img
-                      src={`http://localhost:3500/api/productImg/getImgProduct/${image}`}
+                      src={`${process.env.REACT_APP_SERVER_URL}/productImg/getImgProduct/${image}`}
                       alt=""
                     />
                   </ProductDetailImage>

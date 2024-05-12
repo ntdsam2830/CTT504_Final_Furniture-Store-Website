@@ -1,8 +1,9 @@
 import axios from "axios";
 import { getAuthUser } from "../../utils/authStorage";
 
+
 const getReviewsByProduct = async (prodId) => {
-  const response = await axios.get(`http://localhost:3500/api/review/getReview/${prodId}`);
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/review/getReview/${prodId}`);
   if (response.data) {
     return response.data;
   }
@@ -10,7 +11,7 @@ const getReviewsByProduct = async (prodId) => {
 
 const addReview = async (review) => {
   const user = getAuthUser();
-  const response = await axios.post(`http://localhost:3500/api/review/addReview`,
+  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/review/addReview`,
     review,
     {
       headers: {
@@ -25,7 +26,7 @@ const addReview = async (review) => {
 
 const updateFavList = async (updatedReview) => {
   const user = getAuthUser();
-  const response = await axios.put(`http://localhost:3500/api/review/updateListFavor`,
+  const response = await axios.put(`${process.env.REACT_APP_SERVER_URL}/review/updateListFavor`,
     updatedReview,
     {
       headers: {

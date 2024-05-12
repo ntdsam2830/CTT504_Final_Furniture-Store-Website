@@ -11,12 +11,13 @@ import {
   ProductItemWrapper,
 } from "./styles";
 
+
 const ProductItem = ({ item, style }) => {
   return (
     <ProductItemWrapper style={style}>
       <ProductItemImage
         style={{
-          backgroundImage: `url(http://localhost:3500/api/productImg/getImgProduct/${item.images[0]})`,
+          backgroundImage: `url(${process.env.REACT_APP_SERVER_URL}/productImg/getImgProduct/${item.images[0]})`,
         }}
       >
         {item.discount && item.discount !== "" && (

@@ -6,9 +6,10 @@ import {
   removeAccessToken,
 } from "../../utils/authStorage";
 
+
 const register = async (userData) => {
   const response = await axios.post(
-    "http://localhost:3500/api/user/register",
+    `${process.env.REACT_APP_SERVER_URL}/user/register`,
     userData
   );
   if (response.data) {
@@ -18,7 +19,7 @@ const register = async (userData) => {
 
 const login = async (userData) => {
   const response = await axios.post(
-    "http://localhost:3500/api/user/login",
+    `${process.env.REACT_APP_SERVER_URL}/user/login`,
     userData
   );
   if (response.data) {
@@ -28,7 +29,7 @@ const login = async (userData) => {
 
 const logout = async (refreshToken) => {
   Cookies.set("refreshToken", refreshToken);
-  const response = await axios.get("http://localhost:3500/api/user/logout", {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/logout`, {
     withCredentials: true,
   });
   if (response.data) {
@@ -39,7 +40,7 @@ const logout = async (refreshToken) => {
 const update = async (updatedUserData) => {
   const user = getAuthUser();
   const response = await axios.put(
-    "http://localhost:3500/api/user/updateProfile",
+    `${process.env.REACT_APP_SERVER_URL}/user/updateProfile`,
     updatedUserData,
     {
       headers: {
@@ -54,7 +55,7 @@ const update = async (updatedUserData) => {
 
 const forgotPassword = async (email) => {
   const response = await axios.post(
-    "http://localhost:3500/api/user/forgot-password-token",
+    `${process.env.REACT_APP_SERVER_URL}/user/forgot-password-token`,
     email
   );
   if (response.data) {
@@ -65,7 +66,7 @@ const forgotPassword = async (email) => {
 const resetPassword = async (password) => {
   const token = getAccessToken();
   const response = await axios.put(
-    `http://localhost:3500/api/user/reset-password/${token}`,
+    `${process.env.REACT_APP_SERVER_URL}/user/reset-password/${token}`,
     password
   );
   console.log(response);
@@ -77,7 +78,7 @@ const resetPassword = async (password) => {
 
 const userCart = async () => {
   const user = getAuthUser();
-  const response = await axios.get("http://localhost:3500/api/cart/info", {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/cart/info`, {
     headers: {
       Authorization: "Bearer " + user.token,
     },
@@ -90,7 +91,7 @@ const userCart = async () => {
 const addCart = async (data) => {
   const user = getAuthUser();
   const response = await axios.post(
-    "http://localhost:3500/api/cart/addToCart",
+    `${process.env.REACT_APP_SERVER_URL}/cart/addToCart`,
     data,
     {
       headers: {
@@ -107,7 +108,7 @@ const deleteCart = async (data) => {
   const user = getAuthUser();
   console.log(data);
   const response = await axios.delete(
-    "http://localhost:3500/api/cart/deleteProduct",
+    `${process.env.REACT_APP_SERVER_URL}/cart/deleteProduct`,
     {
       headers: {
         Authorization: "Bearer " + user.token,
@@ -124,7 +125,7 @@ const deleteCarts = async (data) => {
   const user = getAuthUser();
   console.log(data);
   const response = await axios.delete(
-    "http://localhost:3500/api/cart/deleteAll",
+    `${process.env.REACT_APP_SERVER_URL}/cart/deleteAll`,
     {
       headers: {
         Authorization: "Bearer " + user.token,
