@@ -1,4 +1,4 @@
-const app = require('./app');
+const app = require('./index');
 const dotenv = require('dotenv');
 const moogose = require('mongoose');
 
@@ -10,6 +10,6 @@ moogose
     .catch(err => console.log(err));
 
 //-----------------------------------
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });
