@@ -16,7 +16,8 @@ const corsOption = {
   origin: '*',
   methods: '*',
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
+  credentials: true,
+  optionSuccessStatus: 200
 };
 app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
 
