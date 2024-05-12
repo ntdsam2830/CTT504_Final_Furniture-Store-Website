@@ -4,12 +4,14 @@
         { "src": "/src/**/app.js", "use": "@vercel/node" },
         { "src": "/src/**/index.js", "use": "@vercel/node" }
     ],
-    "routes": [
+    "rewrites": [
         {
             "src": "/(.*)",
             "dest": "/src/app.js",
             "headers": { "key": "Cache-Control", "value": "no-cache" }
-        },
+        }
+    ],
+    "headers": [
         {
             "src": "/(.*)",
             "headers": [
