@@ -13,13 +13,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOption = {
-  origin: "*",
+  origin: [process.env.SELLER_URL, process.env.USER_URL],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
 app.options('*', cors(corsOption));
-// app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
+app.use(cors(corsOption)); // sau này chỉnh lại thành đg dẫn mặc định
 
 //-----------------------------------
 //routes & controller
