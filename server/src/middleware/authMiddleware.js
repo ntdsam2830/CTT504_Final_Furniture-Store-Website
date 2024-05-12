@@ -1,5 +1,5 @@
-const {verify} = require('jsonwebtoken');
-const User = require('../models/User');
+const { verify } = require('jsonwebtoken');
+const User = require('../models/user');
 
 const authGuard = async (req, res, next) => {
     try {
@@ -33,16 +33,16 @@ const authGuard = async (req, res, next) => {
 
 const isAdmin = async (req, res, next) => {
     try {
-        const seller = await User.findOne({email: req.body.email});
-        if(!seller) throw new Error("User not found!");
-        else if(seller.role != "admin") throw new Error("Not Admin, Login failed");
+        const seller = await User.findOne({ email: req.body.email });
+        if (!seller) throw new Error("User not found!");
+        else if (seller.role != "admin") throw new Error("Not Admin, Login failed");
         next();
     } catch (error) {
         next(error)
     }
 }
 
-const checkTokenAdmin = async (req,res,next)=>{
+const checkTokenAdmin = async (req, res, next) => {
     try {
         if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
             const token = req.headers.authorization.split(" ")[1];
@@ -68,7 +68,7 @@ const checkTokenAdmin = async (req,res,next)=>{
     }
 }
 
-const checkValidProduct = async(req,res,next) => {
+const checkValidProduct = async (req, res, next) => {
     try {
         console.log(req.files);
         next();
@@ -76,4 +76,4 @@ const checkValidProduct = async(req,res,next) => {
         next(error)
     }
 }
-module.exports = {authGuard,isAdmin,checkTokenAdmin,checkValidProduct};
+module.exports = { authGuard, isAdmin, checkTokenAdmin, checkValidProduct };
