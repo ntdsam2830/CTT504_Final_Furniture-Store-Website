@@ -1,4 +1,4 @@
-const app = require('./index');
+const app = require('./app');
 const dotenv = require('dotenv');
 const moogose = require('mongoose');
 

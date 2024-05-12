@@ -3,7 +3,7 @@ const cors = require("cors");
 const {
   errorResposerHandler,
   invalidPathHandler,
-} = require("../src/middleware/errorHandler");
+} = require("./middleware/errorHandler");
 require("express-async-errors");
 require("dotenv").config();
 
