@@ -25,6 +25,7 @@ const addProductController = async (req, res, next) => {
       quantity: req.body.quantity,
       price: req.body.price,
     });
+    console.log(productList);
     res.status(201).json(productList);
   } catch (err) {
     next(err);
