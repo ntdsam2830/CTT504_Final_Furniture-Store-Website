@@ -1,6 +1,8 @@
 // services/cartService.js
 
 const CartInfo = require("../models/Cart");
+const User = require('../models/User');
+const Product = require('../models/Product');
 
 const findOrCreateCart = async (userId) => {
   let cart = await CartInfo.findOne({ userId });
@@ -25,8 +27,9 @@ const addProductToCart = async (userId, productDetails) => {
   );
 
   if (existingProduct) {
-    existingProduct.quantity = productDetails.quantity;
-    existingProduct.total = productDetails.quantity * productDetails.price;
+    console.log(0);
+    existingProduct.quantity += productDetails.quantity;
+    existingProduct.total += productDetails.quantity * productDetails.price;
   } else {
     const newProduct = {
       productId: productDetails.id,
@@ -37,7 +40,6 @@ const addProductToCart = async (userId, productDetails) => {
     };
     cart.productList.push(newProduct);
   }
-
   await cart.save();
   return cart.productList;
 };
@@ -64,6 +66,14 @@ const deleteProductFromCart = async (userId, productName) => {
 };
 
 const deleteAllProductsFromCart = async (userId) => {
+  const user = await CartInfo.findOne({ userId: userId });
+  if (!user) throw new Error("Cart not found")
+  user.productList.map(async item => {
+    const product = await Product.findById(item.productId)
+    console.log(product);
+    product.quantitySale += item.quantity;
+    await product.save()
+  })
   const result = await CartInfo.deleteOne({ userId });
   if (result.deletedCount === 1) {
     return [];
