@@ -73,7 +73,7 @@ const addProduct = async (req, res, next) => {
 
       const savedFiles = await Promise.all(files.map(file => productImgService.saveProductImg(file)));
 
-      const savedFileIds = savedFiles.map(savedFile => savedFile.data._id);
+      const savedFileIds = savedFiles.map(savedFile => savedFile.data._id.toString());
 
       req.body.images = savedFileIds;
 
@@ -89,6 +89,7 @@ const addProduct = async (req, res, next) => {
         rating: req.body.rating,
         images: req.body.images
       });
+
       if (!newProduct) {
         throw new Error("Create failed!")
       }
