@@ -13,8 +13,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOption = {
-  origin: '*',
-  methods: '*',
+  origin: [process.env.SELLER_URL, process.env.USER_URL],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'HEAD'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionSuccessStatus: 204,
