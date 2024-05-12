@@ -1,18 +1,19 @@
 import axios from "axios";
 import { config } from "../../utils/axiosconfig";
-import { base_url } from "../../utils/baseUrl";
 import { getAccessToken } from "../../utils/authStorage";
 
 const token = getAccessToken();
 
+
+
 const getProducts = async () => {
-  const response = await axios.get(`${base_url}product/`);
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/product/`);
 
   return response.data;
 };
 const createProduct = async (product) => {
   const response = await axios.post(
-    `${base_url}product/createproduct`,
+    `${process.env.REACT_APP_SERVER_URL}/product/createproduct`,
     product,
     {
       headers: {
@@ -28,7 +29,7 @@ const createProduct = async (product) => {
 
 const deleteProduct = async (id) => {
   const response = await axios.delete(
-    `${base_url}product/deleteproduct/${id}`,
+    `${process.env.REACT_APP_SERVER_URL}/product/deleteproduct/${id}`,
     config
   );
 
@@ -37,7 +38,7 @@ const deleteProduct = async (id) => {
 
 const editOneProduct = async (data) => {
   const response = await axios.put(
-    `${base_url}product/updateproduct/${data.id}`,
+    `${process.env.REACT_APP_SERVER_URL}/product/updateproduct/${data.id}`,
     data,
     config
   );
@@ -45,7 +46,7 @@ const editOneProduct = async (data) => {
 };
 
 const getOneProduct = async (id) => {
-  const response = await axios.get(`${base_url}product/${id}`, config);
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/product/${id}`, config);
   return response.data;
 };
 
