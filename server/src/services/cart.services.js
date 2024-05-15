@@ -3,6 +3,16 @@
 const CartInfo = require("../models/Cart");
 const User = require('../models/user');
 const Product = require('../models/Product');
+const nodemailer = require("nodemailer");
+require("dotenv").config();
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  service: "Gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSEMAIL,
+  },
+});
 
 const findOrCreateCart = async (userId) => {
   let cart = await CartInfo.findOne({ userId });
@@ -66,14 +76,37 @@ const deleteProductFromCart = async (userId, productName) => {
 };
 
 const deleteAllProductsFromCart = async (userId) => {
+  const userData = await User.findById(userId);
+  if (!userData) throw new Error("User not found")
   const user = await CartInfo.findOne({ userId: userId });
   if (!user) throw new Error("Cart not found")
+  //
+  let dataReceipt = "";
+  let totalReceipt = 0;
   user.productList.map(async item => {
+    dataReceipt += `<p>Product Name: ${item.productName} | Quantity: ${item.quantity} | Price: ${item.price}</p>`
+    totalReceipt += item.total
     const product = await Product.findById(item.productId)
-    console.log(product);
     product.quantitySale += item.quantity;
     await product.save()
   })
+  dataReceipt += `<p>Total: ${totalReceipt}</p>`
+  const mailOptions = {
+    from: "Future Furniture Application",
+    to: userData.email,
+    subject: "Your Order",
+    html: `
+            <h3>Hello ${userData.userName},</h3>
+            <p>You have purchased from Future Furniture, here is your receipt:</p>
+            ${dataReceipt}
+            `,
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      reject(error);
+    }
+  });
+
   const result = await CartInfo.deleteOne({ userId });
   if (result.deletedCount === 1) {
     return [];

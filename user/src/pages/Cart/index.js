@@ -54,7 +54,7 @@ const Cart = () => {
         dispatch(deleteAllCart());
         Swal.fire({
           title: "Finished",
-          text: "Your cart has been purchased ",
+          text: "Your cart has been purchased. A confirmation email has been sent to your inbox",
           icon: "success",
         });
       }
